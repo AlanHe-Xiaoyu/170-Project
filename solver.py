@@ -24,6 +24,19 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A list of locations representing the car path
         A list of (location, [homes]) representing drop-offs
     """
+    shortest_paths_and_lengths(list_of_locations, adjacency_matrix)
+    pass
+
+def shortest_paths_and_lengths(all_locs, adj_matrix):
+    print(all_locs)
+    actual_graph, msg = adjacency_matrix_to_graph(adj_matrix)
+    # print(msg + "???")
+    nx.draw(actual_graph)
+    dijkstra_result = nx.shortest_path_length(actual_graph)
+    for i in dijkstra_result:
+        print(i)
+    # print(dijkstra_result.next())
+    pass
     
     
 
