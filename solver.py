@@ -32,7 +32,7 @@ def shortest_paths_and_lengths(all_locs, adj_matrix):
     actual_graph, msg = adjacency_matrix_to_graph(adj_matrix)
     # print(msg + "???")
     nx.draw(actual_graph)
-    dijkstra_result = nx.shortest_path_length(actual_graph)
+    dijkstra_result = nx.all_pairs_dijkstra(actual_graph)
     for i in dijkstra_result:
         print(i)
     # print(dijkstra_result.next())
