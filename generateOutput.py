@@ -1,5 +1,12 @@
-
-
+"""
+@input
+    car_route = list of places the car would go to (first = starting_car_location, last = starting_car_location)
+    shortest_path_info = result of shortest_paths_and_lengths (dijkstra from nx library)
+    list_of_homes, list_of_locs = input directly from solver#solve
+@output - a list of 3 things
+    1st and 2nd = result needed for output
+    3rd = total energy expenditure (need minimize, stored for self-reference)
+"""
 def dropoffLocToOutput(car_route, shortest_path_info, list_of_homes, list_of_locs):
     dropoff_info = {}
     walking_dist = 0
