@@ -6,6 +6,7 @@ import argparse
 import utils
 
 from student_utils import *
+from generateOutput import *
 """
 ======================================================================
   Complete the following function.
@@ -24,18 +25,25 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A list of locations representing the car path
         A list of (location, [homes]) representing drop-offs
     """
-    shortest_paths_and_lengths(list_of_locations, adjacency_matrix)
+    shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
     all_cycles = generate_all_cycles(list_of_locations, adjacency_matrix, starting_car_location)
-    print(all_cycles)
-    pass
+    # print(all_cycles)
+    # pass
+    min_result_1, min_result_2, min_energy = None, None, float('inf')
+    for car_cycle in all_cycles:
+        result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+        if energy < min_energy:
+            min_result_1, min_result_2, min_energy = result_1, result_2, energy
+    
+    return [min_result_1, min_result_2]
 
 def shortest_paths_and_lengths(all_locs, adj_matrix):
-    print(all_locs)
+    # print(all_locs)
     actual_graph, msg = adjacency_matrix_to_graph(adj_matrix)
     # print(msg + "???")
-    print("HI")
+    # print("HI")
     nx.draw_networkx(actual_graph)
-    print("END")
+    # print("END")
     dijkstra_result = nx.all_pairs_dijkstra(actual_graph)
     # for i in dijkstra_result:
     #     # print(i)
@@ -98,6 +106,7 @@ def convertToFile(path, dropoff_mapping, path_to_file, list_locs):
     for dropoff in dropoff_mapping.keys():
         strDrop = list_locs[dropoff] + ' '
         for node in dropoff_mapping[dropoff]:
+            # print(node)
             strDrop += list_locs[node] + ' '
         strDrop = strDrop.strip()
         strDrop += '\n'
