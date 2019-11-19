@@ -25,22 +25,26 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A list of (location, [homes]) representing drop-offs
     """
     shortest_paths_and_lengths(list_of_locations, adjacency_matrix)
+    all_cycles = generate_all_cycles(list_of_locations, adjacency_matrix, starting_car_location)
+    print(all_cycles)
     pass
 
 def shortest_paths_and_lengths(all_locs, adj_matrix):
     print(all_locs)
     actual_graph, msg = adjacency_matrix_to_graph(adj_matrix)
     # print(msg + "???")
-    nx.draw(actual_graph)
+    print("HI")
+    nx.draw_networkx(actual_graph)
+    print("END")
     dijkstra_result = nx.all_pairs_dijkstra(actual_graph)
-    for i in dijkstra_result:
-        # print(i)
-        print(i[1][0])
+    # for i in dijkstra_result:
+    #     # print(i)
+    #     print(i[1][0])
     # print(dijkstra_result.next())
-    pass
+    return dijkstra_result
 
 def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
-    visited = [0]*len(all_locs)
+    visited = [0] * len(all_locs)
     cycles = []
     start_vertex = 0
     for i in range(len(all_locs)):
@@ -54,14 +58,17 @@ def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
         nonlocal start_vertex
         nonlocal adj_matrix
         if node == start_vertex and len(path) > 1:
-            path += [start_vertex]
+            # print(path)
+            # path += [start_vertex]
+            # print(path)
             cycles += [path]
             return
-        if visited[node] > 2:
+        if visited[node] >= 2:
             return
+        visited[node] += 1
         for i in range(len(adj_matrix[node])):
             if adj_matrix[node][i] is not 'x':
-                dfs(i, path+[i])
+                dfs(i, path + [i])
 
 
     dfs(start_vertex, [start_vertex])
