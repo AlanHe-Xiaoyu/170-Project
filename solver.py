@@ -27,16 +27,16 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
     all_cycles = generate_all_cycles(list_of_locations, adjacency_matrix, starting_car_location)
-    # print(all_cycles)
+    print(all_cycles)
     # pass
     min_result_1, min_result_2, min_energy = None, None, float('inf')
     for car_cycle in all_cycles:
         result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
         if energy < min_energy:
             min_result_1, min_result_2, min_energy = result_1, result_2, energy
-            # print(min_result_1, min_result_2, min_energy)
+            print(min_result_1, min_result_2, min_energy)
     
-    # print(min_energy)
+    print(min_energy)
     return [min_result_1, min_result_2]
 
 def shortest_paths_and_lengths(all_locs, adj_matrix):
@@ -54,7 +54,8 @@ def shortest_paths_and_lengths(all_locs, adj_matrix):
     return dijkstra_result
 
 def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
-    visited = [[0]*len(adj_matrix[0])]*len(adj_matrix)
+    # visited = [[0]*len(adj_matrix[0])]*len(adj_matrix)
+    visited = [[0 for _ in range(len(adj_matrix))] for _ in range(len(adj_matrix))]
     cycles = []
     start_vertex = 0
     for i in range(len(all_locs)):
@@ -64,6 +65,8 @@ def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
 
     def dfs(node, path):
         nonlocal cycles
+        nonlocal adj_matrix
+        nonlocal visited
 
         if node == start_vertex:
             cycles += [path]
