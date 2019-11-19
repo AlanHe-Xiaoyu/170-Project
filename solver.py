@@ -25,19 +25,23 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A list of (location, [homes]) representing drop-offs
     """
     shortest_paths_and_lengths(list_of_locations, adjacency_matrix)
+    all_cycles = generate_all_cycles(list_of_locations, adjacency_matrix, starting_car_location)
+    print(all_cycles)
     pass
 
 def shortest_paths_and_lengths(all_locs, adj_matrix):
     print(all_locs)
     actual_graph, msg = adjacency_matrix_to_graph(adj_matrix)
     # print(msg + "???")
-    nx.draw(actual_graph)
+    print("HI")
+    nx.draw_networkx(actual_graph)
+    print("END")
     dijkstra_result = nx.all_pairs_dijkstra(actual_graph)
-    for i in dijkstra_result:
-        # print(i)
-        print(i[1][0])
+    # for i in dijkstra_result:
+    #     # print(i)
+    #     print(i[1][0])
     # print(dijkstra_result.next())
-    pass
+    return dijkstra_result
 
 def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
     visited = [[0]*len(adj_matrix[0])]*len(adj_matrix)
@@ -50,7 +54,9 @@ def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
 
     def dfs(node, path):
         if node == start_vertex and len(path) > 1:
-            path += [start_vertex]
+            # print(path)
+            # path += [start_vertex]
+            # print(path)
             cycles += [path]
             return
         for i in range(len(adj_matrix[node])):
