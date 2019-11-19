@@ -20,9 +20,11 @@ def dropoffLocToOutput(car_route, shortest_path_info, list_of_homes, list_of_loc
         
         minDropoff = min(car_route, key=lambda loc: distDict[loc])
         if minDropoff in dropoff_info.keys():
-            dropoff_info[minDropoff].append(home)
+            # dropoff_info[minDropoff].append(home)
+            dropoff_info[minDropoff].append(home_idx)
         else:
-            dropoff_info[minDropoff] = [home]
+            # dropoff_info[minDropoff] = [home]
+            dropoff_info[minDropoff] = [home_idx]
 
         minDist = distDict[minDropoff]
         walking_dist += minDist

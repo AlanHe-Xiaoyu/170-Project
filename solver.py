@@ -34,7 +34,9 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
         if energy < min_energy:
             min_result_1, min_result_2, min_energy = result_1, result_2, energy
+            # print(min_result_1, min_result_2, min_energy)
     
+    # print(min_energy)
     return [min_result_1, min_result_2]
 
 def shortest_paths_and_lengths(all_locs, adj_matrix):
@@ -61,6 +63,8 @@ def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
             break
 
     def dfs(node, path):
+        nonlocal cycles
+
         if node == start_vertex and len(path) > 1:
             # print(path)
             # path += [start_vertex]
