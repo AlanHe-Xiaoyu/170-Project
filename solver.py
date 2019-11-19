@@ -40,7 +40,7 @@ def shortest_paths_and_lengths(all_locs, adj_matrix):
     pass
 
 def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
-    visited = [0]*len(all_locs)
+    visited = [[0]*len(adj_matrix[0])]*len(adj_matrix)
     cycles = []
     start_vertex = 0
     for i in range(len(all_locs)):
@@ -49,19 +49,15 @@ def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
             break
 
     def dfs(node, path):
-        nonlocal cycles
-        nonlocal visited
-        nonlocal start_vertex
-        nonlocal adj_matrix
         if node == start_vertex and len(path) > 1:
             path += [start_vertex]
             cycles += [path]
             return
-        if visited[node] > 2:
-            return
         for i in range(len(adj_matrix[node])):
-            if adj_matrix[node][i] is not 'x':
+            if adj_matrix[node][i] is not 'x' and visited[node][i] < 1:
+                visited[node][i] += 1
                 dfs(i, path+[i])
+                visited[node][i] -= 1
 
 
     dfs(start_vertex, [start_vertex])
