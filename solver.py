@@ -34,7 +34,8 @@ def shortest_paths_and_lengths(all_locs, adj_matrix):
     nx.draw(actual_graph)
     dijkstra_result = nx.all_pairs_dijkstra(actual_graph)
     for i in dijkstra_result:
-        print(i)
+        # print(i)
+        print(i[1][0])
     # print(dijkstra_result.next())
     pass
     
