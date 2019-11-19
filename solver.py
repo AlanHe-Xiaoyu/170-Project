@@ -65,12 +65,9 @@ def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
     def dfs(node, path):
         nonlocal cycles
 
-        if node == start_vertex and len(path) > 1:
-            # print(path)
-            # path += [start_vertex]
-            # print(path)
+        if node == start_vertex:
             cycles += [path]
-            return
+
         for i in range(len(adj_matrix[node])):
             if adj_matrix[node][i] is not 'x' and visited[node][i] < 1:
                 visited[node][i] += 1
