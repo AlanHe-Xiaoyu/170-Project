@@ -17,7 +17,10 @@ def dropoffLocToOutput(car_route, shortest_path_info, list_of_homes, list_of_loc
         home = list_of_locs[home_idx]
         distDict = shortest_path_info[home_idx][1][0]
         
-        minDropoff = min(car_route, key=lambda loc: distDict[loc])
+        # print(home)
+        # print(car_route)
+        # print(distDict)
+        minDropoff = min(car_route, default=0, key=lambda loc: distDict[loc])
         if minDropoff in dropoff_info.keys():
             dropoff_info[minDropoff].append(home_idx)
         else:
@@ -27,7 +30,7 @@ def dropoffLocToOutput(car_route, shortest_path_info, list_of_homes, list_of_loc
         walking_dist += minDist
 
     total_energy = driving_dist * 2.0 / 3.0 + walking_dist
-    return [car_route, dropoff_info, total_energy]
+    return [car_route, dropoff_info, (total_energy, driving_dist * 2.0 / 3.0, walking_dist)]
 
 
 def getDrivingDist(car_route, shortest_path_info):

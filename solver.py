@@ -7,6 +7,7 @@ import utils
 
 from student_utils import *
 from generateOutput import *
+from Google_OR import main_func
 """
 ======================================================================
   Complete the following function.
@@ -26,17 +27,45 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A list of (location, [homes]) representing drop-offs
     """
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
-    all_cycles = generate_all_cycles(list_of_locations, adjacency_matrix, starting_car_location)
-    # print(all_cycles)
-    min_result_1, min_result_2, min_energy = None, None, float('inf')
-    for car_cycle in all_cycles:
-        result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-        if energy < min_energy:
-            min_result_1, min_result_2, min_energy = result_1, result_2, energy
-            # print(min_result_1, min_result_2, min_energy)
+    int_adj_matrix = adj_matrix_to_int(adjacency_matrix)
+    car_cycle = main_func(int_adj_matrix)
+    # print(car_cycle)
+
+    result_1, result_2, (total_energy, driving_energy, walking_energy) = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+
+    print("Total energy = ", total_energy, " with driving energy = ", driving_energy, " and walking energy = ", walking_energy)
+    return [result_1, result_2]
     
-    print("Min energy = ", min_energy)
-    return [min_result_1, min_result_2]
+    # dist_info_to_Soda = shortest_path_info[0][1][0]
+    # longest_distance = dist_info_to_Soda[max(dist_info_to_Soda)]
+
+    # all_cycles = generate_all_cycles(list_of_locations, adjacency_matrix, starting_car_location, longest_distance)
+    # # print(all_cycles)
+    # print("Cycles done")
+    # min_result_1, min_result_2, min_energy = None, None, float('inf')
+    # for car_cycle in all_cycles:
+    #     result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    #     if energy < min_energy:
+    #         min_result_1, min_result_2, min_energy = result_1, result_2, energy
+    #         # print(min_result_1, min_result_2, min_energy)
+    
+    # print("Min energy = ", min_energy)
+    # return [min_result_1, min_result_2]
+
+def adj_matrix_to_int(adj_matrix):
+    int_adj_matrix = []
+    size = len(adj_matrix)
+    for i in range(size):
+        curRow = []
+        for j in range(size):
+            dist = adj_matrix[i][j]
+            if dist == 'x':
+                curRow.append(100000)
+            else:
+                curRow.append(int(dist))
+        int_adj_matrix.append(curRow)
+
+    return int_adj_matrix
 
 def shortest_paths_and_lengths(all_locs, adj_matrix):
     actual_graph, msg = adjacency_matrix_to_graph(adj_matrix)
@@ -44,7 +73,7 @@ def shortest_paths_and_lengths(all_locs, adj_matrix):
     dijkstra_result = nx.all_pairs_dijkstra(actual_graph)
     return dijkstra_result
 
-def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
+def generate_all_cycles(all_locs, adj_matrix, starting_car_location, longest_distance):
     visited = [[0 for _ in range(len(adj_matrix))] for _ in range(len(adj_matrix))]
     cycles = []
     start_vertex = 0
@@ -53,19 +82,29 @@ def generate_all_cycles(all_locs, adj_matrix, starting_car_location):
             start_vertex = i
             break
 
-    def dfs(node, path):
+    def dfs(node, path, cur_length):
         nonlocal cycles
+        nonlocal longest_distance
+
+        # print(cur_length)
+
+        if cur_length > 14:
+            return
 
         if node == start_vertex:
             cycles += [path]
 
         for i in range(len(adj_matrix[node])):
+            next_dist = adj_matrix[node][i]
+            # print(next_dist)
+            if next_dist is not 'x' and next_dist > longest_distance:
+                continue
             if adj_matrix[node][i] is not 'x' and visited[node][i] < 1:
                 visited[node][i] += 1
-                dfs(i, path+[i])
+                dfs(i, path+[i], cur_length + 1)
                 visited[node][i] -= 1
 
-    dfs(start_vertex, [start_vertex])
+    dfs(start_vertex, [start_vertex], 0)
     return cycles
 
 
