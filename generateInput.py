@@ -1,7 +1,7 @@
 """
 s - 2k
 """
-size = 200
+size = 50
 connectivity = 0.7
 
 

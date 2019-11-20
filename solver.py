@@ -9,6 +9,7 @@ from student_utils import *
 from generateOutput import *
 from Google_OR import main_func
 import input_validator
+import output_validator
 """
 ======================================================================
   Complete the following function.
@@ -32,9 +33,8 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     car_cycle = main_func(int_adj_matrix)
     # print(car_cycle)
 
-    result_1, result_2, (total_energy, driving_energy, walking_energy) = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    result_1, result_2 = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
 
-    print("Total energy = {:.4f}, with Rao driving energy = {:.4f} and TA walking energy = {:.4f}".format(total_energy, driving_energy, walking_energy))
     return [result_1, result_2]
     
     # dist_info_to_Soda = shortest_path_info[0][1][0]
@@ -140,7 +140,7 @@ def convertToFile(path, dropoff_mapping, path_to_file, list_locs):
     utils.write_to_file(path_to_file, string)
 
 def solve_from_file(input_file, output_directory, params=[]):
-    print('Processing', input_file)
+    print('Processing', input_file, 'SOLVING')
 
     input_data = utils.read_file(input_file)
     num_of_locations, num_houses, list_locations, list_houses, starting_car_location, adjacency_matrix = data_parser(input_data)
@@ -153,6 +153,7 @@ def solve_from_file(input_file, output_directory, params=[]):
         os.makedirs(output_directory)
 
     convertToFile(car_path, drop_offs, output_file, list_locations)
+    output_validator.validate_output(input_file, output_file, params=params)
 
 
 def solve_all(input_directory, output_directory, params=[]):
@@ -172,9 +173,7 @@ if __name__=="__main__":
     output_directory = args.output_directory
     if args.all:
         input_directory = args.input
-        input_validator.validate_all_inputs(input_directory, params=args.params)
         solve_all(input_directory, output_directory, params=args.params)
     else:
         input_file = args.input
-        input_validator.validate_input(input_file, params=args.params)
         solve_from_file(input_file, output_directory, params=args.params)

@@ -10,7 +10,7 @@ import input_validator
 
 
 def validate_output(input_file, output_file, params=[]):
-    print('Processing', input_file)
+    print('Processing', input_file, 'for INPUT/OUTPUT VALIDATION \n\n')
 
     input_data = utils.read_file(input_file)
     output_data = utils.read_file(output_file)

@@ -96,11 +96,11 @@ def cost_of_solution(G, car_cycle, dropoff_mapping):
             for house in dropoff_mapping[drop_location]:
                 walking_cost += shortest[drop_location][house]
 
-        message += f'The driving cost of your solution is {driving_cost}.\n'
-        message += f'The walking cost of your solution is {walking_cost}.\n'
+        message += f'The driving cost of your solution is {driving_cost:.4f}.\n'
+        message += f'The walking cost of your solution is {walking_cost:.4f}.\n\n'
         cost = driving_cost + walking_cost
 
-    message += f'The total cost of your solution is {cost}.\n'
+    message += f'The total cost of your solution is {cost:.4f}.\n'
     return cost, message
 
 

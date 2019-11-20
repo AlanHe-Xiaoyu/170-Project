@@ -14,7 +14,7 @@ VALID_FILENAMES = ['50.in', '100.in', '200.in']
 MAX_NAME_LENGTH = 20
 
 def validate_input(input_file, params=[]):
-    print('Processing', input_file)
+    print('Processing', input_file, 'for INPUT VALIDATION\n')
     message, error = tests(input_file, params)
     print(message)
 
@@ -114,7 +114,7 @@ def tests(input_file, params=[]):
         error = True
 
     if not is_metric(G):
-        message += 'Your graph is not metric.\n'
+        message += 'Your graph is not metric.\n\n'
         error = True
 
     if not message:
