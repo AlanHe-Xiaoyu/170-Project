@@ -2,6 +2,7 @@
 s - 2k
 """
 size = 200
+connectivity = 0.7
 
 print(' '.join(["loc" + str(i) for i in range(size - 1)]))
 print(' '.join(["loc" + str(i) for i in range(0, size - 1, 2)]))
@@ -15,7 +16,7 @@ for i in range(size):
     for j in range(size):
         if i > j:
             sample = np.random.random()
-            if sample > 0.3: # add edge
+            if sample > (1 - connectivity): # add edge
                 resample = str(int(np.random.random() * 25) + int(np.random.random() * 50))
                 adj_matrix[i][j] = resample
                 adj_matrix[j][i] = resample
