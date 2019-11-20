@@ -4,8 +4,13 @@ s - 2k
 size = 200
 connectivity = 0.7
 
-print(' '.join(["loc" + str(i) for i in range(size - 1)]))
+
+print(size)
+print(size // 2)
+
+print('Soda ' + ' '.join(["loc" + str(i) for i in range(size - 1)]))
 print(' '.join(["loc" + str(i) for i in range(0, size - 1, 2)]))
+print('Soda')
 
 adj_matrix = []
 for i in range(size):
