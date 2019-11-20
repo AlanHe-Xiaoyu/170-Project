@@ -8,6 +8,7 @@ import utils
 from student_utils import *
 from generateOutput import *
 from Google_OR import main_func
+import input_validator
 """
 ======================================================================
   Complete the following function.
@@ -33,7 +34,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
     result_1, result_2, (total_energy, driving_energy, walking_energy) = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
 
-    print("Total energy = ", total_energy, " with driving energy = ", driving_energy, " and walking energy = ", walking_energy)
+    print("Total energy = {:.4f}, with Rao driving energy = {:.4f} and TA walking energy = {:.4f}".format(total_energy, driving_energy, walking_energy))
     return [result_1, result_2]
     
     # dist_info_to_Soda = shortest_path_info[0][1][0]
@@ -171,7 +172,9 @@ if __name__=="__main__":
     output_directory = args.output_directory
     if args.all:
         input_directory = args.input
+        input_validator.validate_all_inputs(input_directory, params=args.params)
         solve_all(input_directory, output_directory, params=args.params)
     else:
         input_file = args.input
+        input_validator.validate_input(input_file, params=args.params)
         solve_from_file(input_file, output_directory, params=args.params)
