@@ -26,7 +26,8 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         adjacency_matrix: The adjacency matrix from the input file
     Output:
         A list of locations representing the car path
-        A list of (location, [homes]) representing drop-offs
+        A dictionary mapping drop-off location to a list of homes of TAs that got off at that particular location
+        NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
     int_adj_matrix = adj_matrix_to_int(adjacency_matrix)
@@ -132,10 +133,9 @@ def solve_from_file(input_file, output_directory, params=[]):
     car_path, drop_offs = solve(list_locations, list_houses, starting_car_location, adjacency_matrix, params=params)
 
     basename, filename = os.path.split(input_file)
-    output_filename = utils.input_to_output(filename)
-    output_file = f'{output_directory}/{output_filename}'
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
+    output_file = utils.input_to_output(input_file, output_directory)
 
     convertToFile(car_path, drop_offs, output_file, list_locations)
     output_validator.validate_output(input_file, output_file, params=params)

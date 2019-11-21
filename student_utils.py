@@ -100,16 +100,10 @@ def cost_of_solution(G, car_cycle, dropoff_mapping):
         message += f'The walking cost of your solution is {walking_cost:.4f}.\n\n'
         cost = driving_cost + walking_cost
 
+    print(car_cycle, "HI", cost)
     message += f'The total cost of your solution is {cost:.4f}.\n'
     return cost, message
 
 
 def convert_locations_to_indices(list_to_convert, list_of_locations):
     return [list_of_locations.index(name) if name in list_of_locations else None for name in list_to_convert]
-
-
-
-
-
-
-

@@ -55,6 +55,8 @@ for i in range(size):
         adj_matrix[i][j] = str(adj_matrix[i][j])
 for i in range(size):
     print(' '.join(adj_matrix[i]))
+
+    
 # int_adj_matrix = []
 # for i in range(size):
 #     curRow = []
