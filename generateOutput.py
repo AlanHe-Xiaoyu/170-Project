@@ -9,6 +9,7 @@
 """
 def dropoffLocToOutput(car_route, shortest_path_info, list_of_homes, list_of_locs):
     dropoff_info = {}
+    walking_dist = 0
     driving_dist = getDrivingDist(car_route, shortest_path_info)
 
     for home in list_of_homes:
@@ -34,6 +35,7 @@ def getDrivingDist(car_route, shortest_path_info):
 
     for i in range(len(car_route) - 1):
         loc_idx, next_loc_idx = car_route[i], car_route[i + 1]
+        # print(loc_idx, next_loc_idx)
         loc_dist_dict = shortest_path_info[loc_idx][1][0]
         total_driving_cost += loc_dist_dict[next_loc_idx]
 

@@ -4,9 +4,9 @@ s - 2k
 import solver, os
 
 def startGen():
-    fileName = 'test_200.in'
+    fileName = '200_0.9_alan.in'
     size = 200
-    connectivity = 0.7
+    connectivity = 0.9
     
     f = open(fileName,"w+")
     f.write(str(size)+os.linesep)

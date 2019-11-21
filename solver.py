@@ -30,33 +30,43 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
 
+    G, message = adjacency_matrix_to_graph(adjacency_matrix)
+
+    k_cluster_num_upper_bound = len(list_of_homes) // 20 + 1
+
     """
     Potentially use k-cluster to determine the list_of_homes_to_reach
     """
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
     int_adj_matrix = adj_matrix_to_int(adjacency_matrix)
 
-    list_of_homes_to_reach = list_of_homes.copy()
-    home_indices_to_reach = set([0]) # Add Soda to much_reach
-    for home in list_of_homes_to_reach:
-        home_indices_to_reach.add(list_of_locations.index(home))
-    home_indices_to_reach = sorted(list(home_indices_to_reach))
-    car_cycle_on_subsetTSP = subsetTSP(home_indices_to_reach, int_adj_matrix)
-    # if car_cycle_on_subsetTSP:
+    # list_of_homes_to_reach = list_of_homes.copy()
+    # home_indices_to_reach = set([0]) # Add Soda to much_reach
+    # for home in list_of_homes_to_reach:
+    #     home_indices_to_reach.add(list_of_locations.index(home))
+    # home_indices_to_reach = sorted(list(home_indices_to_reach))
+    # car_cycle_on_subsetTSP = subsetTSP(home_indices_to_reach, int_adj_matrix)
+    # if is_valid_walk(G, car_cycle_on_subsetTSP):
     #     print("WOWOWOWOWOW Success!")
     #     print(car_cycle_on_subsetTSP)
     #     result_1, result_2, energy = dropoffLocToOutput(car_cycle_on_subsetTSP, shortest_path_info, list_of_homes, list_of_locations)
     #     return [result_1, result_2]
 
-    minEnergy, min_result_1, min_result_2 = float('inf'), None, None
-    for k_cluster in range(10):
+    min_result_1, min_result_2, minEnergy = None, None, float('inf')
+    for k_cluster in range(1, k_cluster_num_upper_bound):
+        print("Current k_cluster param =", k_cluster)
+
         car_cycle = Google_OR.main_func(int_adj_matrix, k_cluster)
-        result_1, result_2, cur_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-        if cur_energy < minEnergy:
-            pass
+        if is_valid_walk(G, car_cycle):
+            print(k_cluster, "works")
+        # print(car_cycle)
+            result_1, result_2, cur_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+            if cur_energy < minEnergy:
+                min_result_1, min_result_2, minEnergy = result_1, result_2, cur_energy
+        else:
+            return [result_1, result_2]
 
     # result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-
     return [result_1, result_2]
     
 
@@ -83,7 +93,7 @@ def adj_matrix_to_int(adj_matrix):
         for j in range(size):
             dist = adj_matrix[i][j]
             if dist == 'x':
-                curRow.append(100000) """ UGH """
+                curRow.append(100000) # UGHH
             else:
                 curRow.append(int(dist))
         int_adj_matrix.append(curRow)
