@@ -7,7 +7,7 @@ import utils
 
 from student_utils import *
 from generateOutput import *
-from Google_OR import main_func
+import Google_OR
 import input_validator
 import output_validator
 """
@@ -29,15 +29,51 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A dictionary mapping drop-off location to a list of homes of TAs that got off at that particular location
         NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
+
+    """
+    Potentially use k-cluster to determine the list_of_homes_to_reach
+    """
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
     int_adj_matrix = adj_matrix_to_int(adjacency_matrix)
-    car_cycle = main_func(int_adj_matrix)
-    # print(car_cycle)
 
-    result_1, result_2 = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    list_of_homes_to_reach = list_of_homes.copy()
+    home_indices_to_reach = set([0]) # Add Soda to much_reach
+    for home in list_of_homes_to_reach:
+        home_indices_to_reach.add(list_of_locations.index(home))
+    home_indices_to_reach = sorted(list(home_indices_to_reach))
+    car_cycle_on_subsetTSP = subsetTSP(home_indices_to_reach, int_adj_matrix)
+    # if car_cycle_on_subsetTSP:
+    #     print("WOWOWOWOWOW Success!")
+    #     print(car_cycle_on_subsetTSP)
+    #     result_1, result_2, energy = dropoffLocToOutput(car_cycle_on_subsetTSP, shortest_path_info, list_of_homes, list_of_locations)
+    #     return [result_1, result_2]
+
+    minEnergy, min_result_1, min_result_2 = float('inf'), None, None
+    for k_cluster in range(10):
+        car_cycle = Google_OR.main_func(int_adj_matrix, k_cluster)
+        result_1, result_2, cur_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+        if cur_energy < minEnergy:
+            pass
+
+    # result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
 
     return [result_1, result_2]
     
+
+def subsetTSP(list_of_indices, int_adj_matrix):
+    reduced_adj_matrix = []
+    for i in list_of_indices:
+        curRow = []
+        for j in list_of_indices:
+            curRow.append(int_adj_matrix[i][j])
+        reduced_adj_matrix.append(curRow)
+    reduced_car_cycle = Google_OR.main_func(reduced_adj_matrix, 1)
+    # print("BEGIN")
+    # print(reduced_car_cycle)
+    # print(reduced_adj_matrix)
+    # print("END")
+    return reduced_car_cycle
+
 
 def adj_matrix_to_int(adj_matrix):
     int_adj_matrix = []
@@ -47,7 +83,7 @@ def adj_matrix_to_int(adj_matrix):
         for j in range(size):
             dist = adj_matrix[i][j]
             if dist == 'x':
-                curRow.append(100000)
+                curRow.append(100000) """ UGH """
             else:
                 curRow.append(int(dist))
         int_adj_matrix.append(curRow)
