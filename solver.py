@@ -32,7 +32,8 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
     G, message = adjacency_matrix_to_graph(adjacency_matrix)
 
-    k_cluster_num_upper_bound = len(list_of_homes) // 20 + 1
+    # k_cluster_num_upper_bound = len(list_of_homes) // 20 + 1
+    k_cluster_num_upper_bound = 2
 
     """
     Potentially use k-cluster to determine the list_of_homes_to_reach
