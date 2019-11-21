@@ -37,21 +37,6 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
     return [result_1, result_2]
     
-    # dist_info_to_Soda = shortest_path_info[0][1][0]
-    # longest_distance = dist_info_to_Soda[max(dist_info_to_Soda)]
-
-    # all_cycles = generate_all_cycles(list_of_locations, adjacency_matrix, starting_car_location, longest_distance)
-    # # print(all_cycles)
-    # print("Cycles done")
-    # min_result_1, min_result_2, min_energy = None, None, float('inf')
-    # for car_cycle in all_cycles:
-    #     result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-    #     if energy < min_energy:
-    #         min_result_1, min_result_2, min_energy = result_1, result_2, energy
-    #         # print(min_result_1, min_result_2, min_energy)
-    
-    # print("Min energy = ", min_energy)
-    # return [min_result_1, min_result_2]
 
 def adj_matrix_to_int(adj_matrix):
     int_adj_matrix = []
