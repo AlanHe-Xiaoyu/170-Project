@@ -2,6 +2,21 @@
 CS 170 Fall 2019 Project
 # 170-Project
 
+50 location name mapping : 
+50 pre-randomized solution :
+- Gadget1 Loop : (0) -- 30~34 -- (21)
+    Should do (0) -- 30 -- 31 -- 30 -- (0) + (21) -- 34 -- 33 -- 34 -- (21) with 32 dropoff @31/32 --> cost = car 1348 + walk 1000
+- Gadget2 Star : (10) -- 35~45
+    Should do (10) -- 35 -- 36 -- 37 -- 35 -- 40 -- 35 -- 41 -- 35 -- (10)
+        with 38 dropoff @36, 44 dropoff @35, 45 dropoff @40, 42 43 dropoff @41
+    Cost = car 146667.33 + walk 40015 (3 + 20000 + 20000 + 12)
+- Gadget3 Line : (17) -- 46 -- 47 -- 48 -- 49 -- (2)
+    Should do (17) -- 46 -- (17) + (2) -- 49 -- (2) with 47 dropoff @46, 48 dropoff @49 --> cost = car 16 + walk 100000
+
+
+
+
+
 注：目前仅支持TSP over the entire graph
 # 需改进：
 1. modify TSP to cover at least just the list_of_homes

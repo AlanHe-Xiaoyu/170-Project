@@ -46,6 +46,7 @@ def is_metric(G):
     shortest = dict(nx.floyd_warshall(G))
     for u, v, datadict in G.edges(data=True):
         if abs(shortest[u][v] - datadict['weight']) >= 0.00001:
+            print(u, v)
             return False
     return True
 

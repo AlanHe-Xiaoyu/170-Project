@@ -7,8 +7,8 @@ import random
 from student_utils import *
 
 def startGen():
-    inputName = "tricky_50.in"
-    fileName = "50_final.in"
+    inputName = "50_very_tricky.in"
+    fileName = "50_very_tricky_randomized.in"
     size = 50
     
     w = open(fileName,"w+")

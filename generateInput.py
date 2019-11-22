@@ -4,9 +4,10 @@ s - 2k
 import solver, os
 
 def startGen():
-    fileName = '40_prep_50.in'
-    size = 40
+    fileName = '50_prep_30.in'
+    size = 30
     connectivity = 0.7
+    edge_weight_cap = 30
     
     f = open(fileName,"w+")
     f.write(str(size)+os.linesep)
@@ -30,9 +31,9 @@ def startGen():
             if i > j:
                 sample = np.random.random()
                 if sample > (1 - connectivity): # add edge
-                    resample = int(np.random.random() * 75)
+                    resample = int(np.random.random() * edge_weight_cap)
                     while resample == 0:
-                        resample = int(np.random.random() * 75)
+                        resample = int(np.random.random() * edge_weight_cap)
                     adj_matrix[i][j] = resample
                     adj_matrix[j][i] = resample
 

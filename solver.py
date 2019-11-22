@@ -64,7 +64,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     print('Baseline 1 done')
     min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
 
-    # return [min_result_1, min_result_2]
+    return [min_result_1, min_result_2]
 
     """
     Baseline 2 : Mindless TSP (Google OR Tool)
