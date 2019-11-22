@@ -4,9 +4,9 @@ s - 2k
 import solver, os
 
 def startGen():
-    fileName = '200_0.9_alan.in'
-    size = 200
-    connectivity = 0.9
+    fileName = '40_prep_50.in'
+    size = 40
+    connectivity = 0.7
     
     f = open(fileName,"w+")
     f.write(str(size)+os.linesep)
@@ -30,9 +30,9 @@ def startGen():
             if i > j:
                 sample = np.random.random()
                 if sample > (1 - connectivity): # add edge
-                    resample = int(np.random.random() * 25) + int(np.random.random() * 50)
+                    resample = int(np.random.random() * 75)
                     while resample == 0:
-                        resample = int(np.random.random() * 25) + int(np.random.random() * 50)
+                        resample = int(np.random.random() * 75)
                     adj_matrix[i][j] = resample
                     adj_matrix[j][i] = resample
 
