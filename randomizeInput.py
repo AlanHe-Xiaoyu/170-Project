@@ -48,6 +48,10 @@ def startGen():
     w.write(starting_car_location+os.linesep)
     for i in range(size):
         for j in range(size):
+            if adj_matrix_random[i][j] == 'x':
+                pass
+            else:
+                adj_matrix_random[i][j] = int(adj_matrix_random[i][j])
             adj_matrix_random[i][j] = str(adj_matrix_random[i][j])
     for i in range(size):
         w.write(' '.join(adj_matrix_random[i]) + os.linesep)

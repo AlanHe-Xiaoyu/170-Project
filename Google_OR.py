@@ -58,27 +58,12 @@ def print_solution(data, manager, routing, assignment):
     total_load = 0
     for vehicle_id in range(data['num_vehicles']):
         index = routing.Start(vehicle_id)
-        # index = 0
-        print(index)
-        # plan_output = 'Route for vehicle {}:\n'.format(vehicle_id)
-        # route_distance = 0
-        # route_load = 0
+        # print(index)
         while not routing.IsEnd(index):
             car_route.append(index)
 
             node_index = manager.IndexToNode(index)
-            # route_load += data['demands'][node_index]
-            # plan_output += ' {0} Load({1}) -> '.format(node_index, route_load)
-            # previous_index = index
             index = assignment.Value(routing.NextVar(index))
-            # route_distance += routing.GetArcCostForVehicle(previous_index, index, vehicle_id)
-        # plan_output += ' {0} Load({1})\n'.format(manager.IndexToNode(index),
-        #                                          route_load)
-        # plan_output += 'Distance of the route: {}m\n'.format(route_distance)
-        # plan_output += 'Load of the route: {}\n'.format(route_load)
-        # print(plan_output)
-        # total_distance += route_distance
-        # total_load += route_load
         car_route.append(0)
 
     # print('Total Distance of all routes: {}m'.format(total_distance))
@@ -89,93 +74,28 @@ def print_solution(data, manager, routing, assignment):
 
 
 def main_func(adj_matrix, num_vehicles):
-    """Solve the CVRP problem."""
     # Instantiate the data problem.
     data = create_data_model()
     data['distance_matrix'] = adj_matrix
     data['num_vehicles'] = num_vehicles
 
-    data['demands'] = [0] + [1 for _ in range(len(adj_matrix) - 1)]
-    data['vehicle_capacities'] = [200 for _ in range(num_vehicles)]
-    data['starts'] = [0 for _ in range(num_vehicles)]
-    data['ends'] = [0 for _ in range(num_vehicles)]
+    # data['demands'] = [0] + [1 for _ in range(len(adj_matrix) - 1)]
+    # data['vehicle_capacities'] = [200 for _ in range(num_vehicles)]
+    # data['starts'] = [0 for _ in range(num_vehicles)]
+    # data['ends'] = [0 for _ in range(num_vehicles)]
     # print(data['starts'], data['ends'])
 
-    # # Create the routing index manager.
-    # # [START index_manager]
-    # manager = pywrapcp.RoutingIndexManager(
-    #     len(data['distance_matrix']), data['num_vehicles'], data['starts'],
-    #     data['ends'])
-    # # [END index_manager]
-
-    # # Create Routing Model.
-    # # [START routing_model]
-    # routing = pywrapcp.RoutingModel(manager)
-
-    # # [END routing_model]
-
-    # # Create and register a transit callback.
-    # # [START transit_callback]
-    # def distance_callback(from_index, to_index):
-    #     """Returns the distance between the two nodes."""
-    #     # Convert from routing variable Index to distance matrix NodeIndex.
-    #     from_node = manager.IndexToNode(from_index)
-    #     to_node = manager.IndexToNode(to_index)
-    #     return data['distance_matrix'][from_node][to_node]
-
-    # transit_callback_index = routing.RegisterTransitCallback(distance_callback)
-    # # [END transit_callback]
-
-    # # Define cost of each arc.
-    # # [START arc_cost]
-    # routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
-    # # [END arc_cost]
-
-    # # Add Distance constraint.
-    # # [START distance_constraint]
-    # dimension_name = 'Distance'
-    # routing.AddDimension(
-    #     transit_callback_index,
-    #     0,  # no slack
-    #     2000,  # vehicle maximum travel distance
-    #     True,  # start cumul to zero
-    #     dimension_name)
-    # distance_dimension = routing.GetDimensionOrDie(dimension_name)
-    # distance_dimension.SetGlobalSpanCostCoefficient(100)
-    # # [END distance_constraint]
-
-    # # Setting first solution heuristic.
-    # # [START parameters]
-    # search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    # search_parameters.first_solution_strategy = (
-    #     routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
-    # # [END parameters]
-
-    # # Solve the problem.
-    # # [START solve]
-    # solution = routing.SolveWithParameters(search_parameters)
-    # # [END solve]
-
-    # # Print solution on console.
-    # # [START print_solution]
-    # if solution:
-    #     # print("Solver status: ",  routing.status())
-    #     return print_solution(data, manager, routing, solution)
-    # else:
-    #     print('No TSP solution exists on this graph')
-    #     return None
-    # # [END print_solution]
-    
-    # Create the routing index manager.
     manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
                                            data['num_vehicles'], data['depot'])
 
     # Create Routing Model.
     routing = pywrapcp.RoutingModel(manager)
 
+    print("Hi")
+
     # Create and register a transit callback.
     def distance_callback(from_index, to_index):
-        # Returns the distance between the two nodes.
+        """Returns the distance between the two nodes."""
         # Convert from routing variable Index to distance matrix NodeIndex.
         from_node = manager.IndexToNode(from_index)
         to_node = manager.IndexToNode(to_index)
@@ -185,6 +105,8 @@ def main_func(adj_matrix, num_vehicles):
 
     # Define cost of each arc.
     routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+
+    print("Hi2")
 
     # Add Distance constraint.
     dimension_name = 'Distance'
@@ -197,17 +119,22 @@ def main_func(adj_matrix, num_vehicles):
     distance_dimension = routing.GetDimensionOrDie(dimension_name)
     distance_dimension.SetGlobalSpanCostCoefficient(100)
 
+    print("Hi3")
+
     # Setting first solution heuristic.
     search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = (
-        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+    search_parameters.first_solution_strategy = (routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+
+    print("Hi10")
 
     # Solve the problem.
     solution = routing.SolveWithParameters(search_parameters)
 
+    print("Hi20")
+
     # Print solution on console.
     if solution:
-        # print('TSP success')
+        print('TSP success')
         return print_solution(data, manager, routing, solution)
     else:
         print('No TSP solution exists on this graph')
@@ -215,4 +142,4 @@ def main_func(adj_matrix, num_vehicles):
 
 
 if __name__ == '__main__':
-    main_func([])
+    main_func([], 1)
