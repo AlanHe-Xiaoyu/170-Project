@@ -61,7 +61,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     car_cycle = [0]
     simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info , list_of_homes, list_of_locations)
-
+    print('Baseline 1 done')
     min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
 
     """
@@ -81,18 +81,18 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     Advanced methods
     """
-    for k_cluster in range(2, k_cluster_num_upper_bound): # k = 1 already designed above
-        print("Current k_cluster param =", k_cluster)
+    # for k_cluster in range(2, k_cluster_num_upper_bound): # k = 1 already designed above
+    #     print("Current k_cluster param =", k_cluster)
 
-        car_cycle = Google_OR.main_func(int_adj_matrix, k_cluster)
-        if is_valid_walk(G, car_cycle):
-            print(k_cluster, "works")
-        # print(car_cycle)
-            result_1, result_2, cur_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-            if cur_energy < minEnergy:
-                min_result_1, min_result_2, minEnergy = result_1, result_2, cur_energy
-        else:
-            break
+    #     car_cycle = Google_OR.main_func(int_adj_matrix, k_cluster)
+    #     if is_valid_walk(G, car_cycle):
+    #         print(k_cluster, "works")
+    #     # print(car_cycle)
+    #         result_1, result_2, cur_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    #         if cur_energy < minEnergy:
+    #             min_result_1, min_result_2, minEnergy = result_1, result_2, cur_energy
+    #     else:
+    #         break
 
     # result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
     return [min_result_1, min_result_2]

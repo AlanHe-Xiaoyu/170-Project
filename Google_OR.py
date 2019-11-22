@@ -101,72 +101,71 @@ def main_func(adj_matrix, num_vehicles):
     data['ends'] = [0 for _ in range(num_vehicles)]
     # print(data['starts'], data['ends'])
 
-    # Create the routing index manager.
-    # [START index_manager]
-    manager = pywrapcp.RoutingIndexManager(
-        len(data['distance_matrix']), data['num_vehicles'], data['starts'],
-        data['ends'])
-    # [END index_manager]
+    # # Create the routing index manager.
+    # # [START index_manager]
+    # manager = pywrapcp.RoutingIndexManager(
+    #     len(data['distance_matrix']), data['num_vehicles'], data['starts'],
+    #     data['ends'])
+    # # [END index_manager]
 
-    # Create Routing Model.
-    # [START routing_model]
-    routing = pywrapcp.RoutingModel(manager)
+    # # Create Routing Model.
+    # # [START routing_model]
+    # routing = pywrapcp.RoutingModel(manager)
 
-    # [END routing_model]
+    # # [END routing_model]
 
-    # Create and register a transit callback.
-    # [START transit_callback]
-    def distance_callback(from_index, to_index):
-        """Returns the distance between the two nodes."""
-        # Convert from routing variable Index to distance matrix NodeIndex.
-        from_node = manager.IndexToNode(from_index)
-        to_node = manager.IndexToNode(to_index)
-        return data['distance_matrix'][from_node][to_node]
+    # # Create and register a transit callback.
+    # # [START transit_callback]
+    # def distance_callback(from_index, to_index):
+    #     """Returns the distance between the two nodes."""
+    #     # Convert from routing variable Index to distance matrix NodeIndex.
+    #     from_node = manager.IndexToNode(from_index)
+    #     to_node = manager.IndexToNode(to_index)
+    #     return data['distance_matrix'][from_node][to_node]
 
-    transit_callback_index = routing.RegisterTransitCallback(distance_callback)
-    # [END transit_callback]
+    # transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+    # # [END transit_callback]
 
-    # Define cost of each arc.
-    # [START arc_cost]
-    routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
-    # [END arc_cost]
+    # # Define cost of each arc.
+    # # [START arc_cost]
+    # routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+    # # [END arc_cost]
 
-    # Add Distance constraint.
-    # [START distance_constraint]
-    dimension_name = 'Distance'
-    routing.AddDimension(
-        transit_callback_index,
-        0,  # no slack
-        2000,  # vehicle maximum travel distance
-        True,  # start cumul to zero
-        dimension_name)
-    distance_dimension = routing.GetDimensionOrDie(dimension_name)
-    distance_dimension.SetGlobalSpanCostCoefficient(100)
-    # [END distance_constraint]
+    # # Add Distance constraint.
+    # # [START distance_constraint]
+    # dimension_name = 'Distance'
+    # routing.AddDimension(
+    #     transit_callback_index,
+    #     0,  # no slack
+    #     2000,  # vehicle maximum travel distance
+    #     True,  # start cumul to zero
+    #     dimension_name)
+    # distance_dimension = routing.GetDimensionOrDie(dimension_name)
+    # distance_dimension.SetGlobalSpanCostCoefficient(100)
+    # # [END distance_constraint]
 
-    # Setting first solution heuristic.
-    # [START parameters]
-    search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = (
-        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
-    # [END parameters]
+    # # Setting first solution heuristic.
+    # # [START parameters]
+    # search_parameters = pywrapcp.DefaultRoutingSearchParameters()
+    # search_parameters.first_solution_strategy = (
+    #     routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
+    # # [END parameters]
 
-    # Solve the problem.
-    # [START solve]
-    solution = routing.SolveWithParameters(search_parameters)
-    # [END solve]
+    # # Solve the problem.
+    # # [START solve]
+    # solution = routing.SolveWithParameters(search_parameters)
+    # # [END solve]
 
-    # Print solution on console.
-    # [START print_solution]
-    if solution:
-        # print("Solver status: ",  routing.status())
-        return print_solution(data, manager, routing, solution)
-    else:
-        print('No TSP solution exists on this graph')
-        return None
-    # [END print_solution]
+    # # Print solution on console.
+    # # [START print_solution]
+    # if solution:
+    #     # print("Solver status: ",  routing.status())
+    #     return print_solution(data, manager, routing, solution)
+    # else:
+    #     print('No TSP solution exists on this graph')
+    #     return None
+    # # [END print_solution]
     
-"""
     # Create the routing index manager.
     manager = pywrapcp.RoutingIndexManager(len(data['distance_matrix']),
                                            data['num_vehicles'], data['depot'])
@@ -213,7 +212,6 @@ def main_func(adj_matrix, num_vehicles):
     else:
         print('No TSP solution exists on this graph')
         return None
-"""
 
 
 if __name__ == '__main__':
