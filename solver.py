@@ -41,6 +41,9 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
     int_adj_matrix = adj_matrix_to_int(adjacency_matrix)
 
+    min_result_1, min_result_2, minEnergy = None, None, float('inf')
+
+
     # list_of_homes_to_reach = list_of_homes.copy()
     # home_indices_to_reach = set([0]) # Add Soda to much_reach
     # for home in list_of_homes_to_reach:
@@ -53,8 +56,32 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     #     result_1, result_2, energy = dropoffLocToOutput(car_cycle_on_subsetTSP, shortest_path_info, list_of_homes, list_of_locations)
     #     return [result_1, result_2]
 
-    min_result_1, min_result_2, minEnergy = None, None, float('inf')
-    for k_cluster in range(1, k_cluster_num_upper_bound):
+    """
+    Baseline 1 : Drop off all @Soda
+    """
+    car_cycle = [0]
+    simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info , list_of_homes, list_of_locations)
+
+    min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
+
+    """
+    Baseline 2 : Mindless TSP (Google OR Tool)
+    """
+    simple_TSP_car_cycle = Google_OR.main_func(int_adj_matrix, 1)
+    if is_valid_walk(G, car_cycle):
+        print("Simple TSP works")
+        simple_TSP_result_1, simple_TSP_result_2, simple_TSP_cur_energy = dropoffLocToOutput(simple_TSP_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+        if simple_TSP_cur_energy < minEnergy:
+            min_result_1, min_result_2, minEnergy = simple_TSP_result_1, simple_TSP_result_2, simple_TSP_cur_energy
+
+    """
+    Baseline 3 : Always Send Home
+    """
+
+    """
+    Advanced methods
+    """
+    for k_cluster in range(2, k_cluster_num_upper_bound): # k = 1 already designed above
         print("Current k_cluster param =", k_cluster)
 
         car_cycle = Google_OR.main_func(int_adj_matrix, k_cluster)
@@ -65,10 +92,10 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             if cur_energy < minEnergy:
                 min_result_1, min_result_2, minEnergy = result_1, result_2, cur_energy
         else:
-            return [result_1, result_2]
+            break
 
     # result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-    return [result_1, result_2]
+    return [min_result_1, min_result_2]
     
 
 def subsetTSP(list_of_indices, int_adj_matrix):
