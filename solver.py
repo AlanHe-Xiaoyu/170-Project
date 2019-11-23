@@ -64,13 +64,13 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     print('Baseline 1 done')
     min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
 
-    return [min_result_1, min_result_2]
+    # return [min_result_1, min_result_2]
 
     """
     Baseline 2 : Mindless TSP (Google OR Tool)
     """
     simple_TSP_car_cycle = Google_OR.main_func(int_adj_matrix, 1)
-    if is_valid_walk(G, car_cycle):
+    if simple_TSP_car_cycle and is_valid_walk(G, car_cycle):
         print("Simple TSP works")
         simple_TSP_result_1, simple_TSP_result_2, simple_TSP_cur_energy = dropoffLocToOutput(simple_TSP_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
         if simple_TSP_cur_energy < minEnergy:

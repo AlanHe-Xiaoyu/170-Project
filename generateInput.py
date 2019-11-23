@@ -4,10 +4,10 @@ s - 2k
 import solver, os
 
 def startGen():
-    fileName = '50_prep_30.in'
-    size = 30
+    fileName = '100_prep_55.in'
+    size = 55
     connectivity = 0.7
-    edge_weight_cap = 30
+    edge_weight_cap = 50
     
     f = open(fileName,"w+")
     f.write(str(size)+os.linesep)
