@@ -8,8 +8,8 @@ from student_utils import *
 
 def startGen():
     inputName = "convert.in"
-    fileName = "converted_random.in"
-    size = 50
+    fileName = "100_doggy_done.in"
+    size = 100
     
     w = open(fileName,"w+")
     input_data = utils.read_file(inputName)
