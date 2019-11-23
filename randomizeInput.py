@@ -7,9 +7,9 @@ import random
 from student_utils import *
 
 def startGen():
-    inputName = "convert.in"
-    fileName = "100_doggy_done.in"
-    size = 100
+    inputName = "200_not_ready.in"
+    fileName = "200_ready.in"
+    size = 200
     
     w = open(fileName,"w+")
     input_data = utils.read_file(inputName)
