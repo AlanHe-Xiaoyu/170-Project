@@ -7,7 +7,7 @@ import utils
 
 from student_utils import *
 from generateOutput import *
-import Google_OR
+import Google_OR # Source - Google optimization team https://developers.google.com/optimization/routing/vrp
 import input_validator
 import output_validator
 """
@@ -29,7 +29,6 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A dictionary mapping drop-off location to a list of homes of TAs that got off at that particular location
         NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
-
     G, message = adjacency_matrix_to_graph(adjacency_matrix)
 
     # k_cluster_num_upper_bound = len(list_of_homes) // 20 + 1
@@ -43,42 +42,38 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
     min_result_1, min_result_2, minEnergy = None, None, float('inf')
 
-
-    # list_of_homes_to_reach = list_of_homes.copy()
-    # home_indices_to_reach = set([0]) # Add Soda to much_reach
-    # for home in list_of_homes_to_reach:
-    #     home_indices_to_reach.add(list_of_locations.index(home))
-    # home_indices_to_reach = sorted(list(home_indices_to_reach))
-    # car_cycle_on_subsetTSP = subsetTSP(home_indices_to_reach, int_adj_matrix)
-    # if is_valid_walk(G, car_cycle_on_subsetTSP):
-    #     print("WOWOWOWOWOW Success!")
-    #     print(car_cycle_on_subsetTSP)
-    #     result_1, result_2, energy = dropoffLocToOutput(car_cycle_on_subsetTSP, shortest_path_info, list_of_homes, list_of_locations)
-    #     return [result_1, result_2]
-
     """
     Baseline 1 : Drop off all @Soda
     """
-    car_cycle = [0]
-    simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info , list_of_homes, list_of_locations)
-    print('Baseline 1 done')
+    car_cycle = [list_of_locations.index(starting_car_location)]
+    simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    # print('Baseline 1 done')
     min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
 
-    return [min_result_1, min_result_2]
+    # return [min_result_1, min_result_2]
 
     """
-    Baseline 2 : Mindless TSP (Google OR Tool)
+    Baseline 2 : Mindless TSP (Google OR Tool) <<< Baseline 3 if done
     """
-    simple_TSP_car_cycle = Google_OR.main_func(int_adj_matrix, 1)
-    if simple_TSP_car_cycle and is_valid_walk(G, car_cycle):
-        print("Simple TSP works")
-        simple_TSP_result_1, simple_TSP_result_2, simple_TSP_cur_energy = dropoffLocToOutput(simple_TSP_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-        if simple_TSP_cur_energy < minEnergy:
-            min_result_1, min_result_2, minEnergy = simple_TSP_result_1, simple_TSP_result_2, simple_TSP_cur_energy
+    # simple_TSP_car_cycle = Google_OR.main_func(int_adj_matrix, 1)
+    # if simple_TSP_car_cycle and is_valid_walk(G, car_cycle):
+    #     print("Simple TSP works")
+    #     simple_TSP_result_1, simple_TSP_result_2, simple_TSP_cur_energy = dropoffLocToOutput(simple_TSP_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    #     if simple_TSP_cur_energy < minEnergy:
+    #         min_result_1, min_result_2, minEnergy = simple_TSP_result_1, simple_TSP_result_2, simple_TSP_cur_energy
 
     """
     Baseline 3 : Always Send Home
     """
+    final_homes_only_car_cycle = alwaysSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info)
+    # Begin generation
+    send_home_result_1, send_home_result_2, send_home_energy = dropoffLocToOutput(final_homes_only_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    if send_home_energy < minEnergy:
+        print("Sending Home")
+        min_result_1, min_result_2, minEnergy = send_home_result_1, send_home_result_2, send_home_energy
+
+    return [min_result_1, min_result_2]
+
 
     """
     Advanced methods
@@ -97,7 +92,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     #         break
 
     # result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-    return [min_result_1, min_result_2]
+    # return [min_result_1, min_result_2]
     
 
 def subsetTSP(list_of_indices, int_adj_matrix):
@@ -108,12 +103,40 @@ def subsetTSP(list_of_indices, int_adj_matrix):
             curRow.append(int_adj_matrix[i][j])
         reduced_adj_matrix.append(curRow)
     reduced_car_cycle = Google_OR.main_func(reduced_adj_matrix, 1)
-    # print("BEGIN")
-    # print(reduced_car_cycle)
-    # print(reduced_adj_matrix)
-    # print("END")
     return reduced_car_cycle
 
+"""
+Solution #3
+"""
+def alwaysSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info):
+    starting_idx = list_of_locations.index(starting_car_location)
+    homes_indices = [list_of_locations.index(i) for i in list_of_homes]
+    # print(str(homes_indices) + "HIIIIIII")
+    num_homes = len(homes_indices)
+    homes_int_adj_matrix = []
+    for _ in range(num_homes):
+        homes_int_adj_matrix.append([None] * num_homes)
+    for i in range(num_homes):
+        home = homes_indices[i]
+        homes_int_adj_matrix[i][i] = 0
+        for j in range(i + 1, num_homes):
+            dist_ij, _ = getShortestDistAndPath(shortest_path_info, i, j)
+            homes_int_adj_matrix[i][j] = homes_int_adj_matrix[j][i] = dist_ij
+    homes_only_TSP_car_cycle = Google_OR.main_func(homes_int_adj_matrix, 1)
+    _, final_homes_only_car_cycle = getShortestDistAndPath(shortest_path_info, starting_idx, homes_indices[homes_only_TSP_car_cycle[0]])
+    for i in range(1, len(homes_only_TSP_car_cycle)):
+        prev_car_idx, cur_car_idx = homes_only_TSP_car_cycle[i - 1], homes_only_TSP_car_cycle[i]
+        actual_prev_car, actual_cur_car = homes_indices[prev_car_idx], homes_indices[cur_car_idx]
+        _, sp_between = getShortestDistAndPath(shortest_path_info, actual_prev_car, actual_cur_car)
+        final_homes_only_car_cycle.extend(sp_between[1:])
+    _, ending_path = getShortestDistAndPath(shortest_path_info, homes_indices[homes_only_TSP_car_cycle[-1]], starting_idx)
+    final_homes_only_car_cycle.extend(ending_path[1:])
+    return final_homes_only_car_cycle
+
+def getShortestDistAndPath(dijkstra_info, i, j):
+    pair_info = dijkstra_info[i][1]
+    dist, path = pair_info[0][j], pair_info[1][j]
+    return [dist, path]
 
 def adj_matrix_to_int(adj_matrix):
     int_adj_matrix = []

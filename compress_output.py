@@ -19,4 +19,5 @@ if __name__ == '__main__':
                     for l in output_file.readlines():
                         string += l
                         data[output] = string
+        print("IP")
         output_json.write(json.dumps(data))
