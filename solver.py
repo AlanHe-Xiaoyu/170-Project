@@ -69,7 +69,6 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # Begin generation
     send_home_result_1, send_home_result_2, send_home_energy = dropoffLocToOutput(final_homes_only_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
     if send_home_energy < minEnergy:
-        print("Sending Home")
         min_result_1, min_result_2, minEnergy = send_home_result_1, send_home_result_2, send_home_energy
 
     return [min_result_1, min_result_2]

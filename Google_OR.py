@@ -111,15 +111,12 @@ def main_func(adj_matrix, num_vehicles):
         routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC)
 
     # Solve the problem.
-    print("Hi20")
     assignment = routing.SolveWithParameters(search_parameters)
 
     # Print solution on console.
     if assignment:
-        print('TSP success')
         return print_solution(data, manager, routing, assignment)
     else:
-        print('No TSP solution exists on this graph')
         return None
 
 
