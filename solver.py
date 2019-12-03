@@ -134,6 +134,8 @@ def shortest_paths_and_lengths(all_locs, adj_matrix):
     actual_graph, msg = adjacency_matrix_to_graph(adj_matrix)
     # nx.draw_networkx(actual_graph)
     dijkstra_result = nx.all_pairs_dijkstra(actual_graph)
+    # for r in dijkstra_result:
+    #     print(r[1])
     return dijkstra_result
 
 def generate_all_cycles(all_locs, adj_matrix, starting_car_location, longest_distance):
