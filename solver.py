@@ -4,12 +4,9 @@ sys.path.append('..')
 sys.path.append('../..')
 import argparse
 import utils
-<<<<<<< HEAD
 import random
 
-=======
 from KCluster import *
->>>>>>> 691a3ebdf7de8b56f5f0758c392aa4eff2670f19
 from student_utils import *
 from generateOutput import *
 import Google_OR # Source - Google optimization team https://developers.google.com/optimization/routing/vrp
