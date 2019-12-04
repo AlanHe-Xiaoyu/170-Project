@@ -4,8 +4,12 @@ sys.path.append('..')
 sys.path.append('../..')
 import argparse
 import utils
+<<<<<<< HEAD
 import random
 
+=======
+from KCluster import *
+>>>>>>> 691a3ebdf7de8b56f5f0758c392aa4eff2670f19
 from student_utils import *
 from generateOutput import *
 import Google_OR # Source - Google optimization team https://developers.google.com/optimization/routing/vrp
@@ -46,12 +50,12 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     Baseline 1 : Drop off all @Soda
     """
-    car_cycle = [list_of_locations.index(starting_car_location)]
-    simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-    # print('Baseline 1 done')
-    min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
-
-    # return [min_result_1, min_result_2]
+    # car_cycle = [list_of_locations.index(starting_car_location)]
+    # simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    # # print('Baseline 1 done')
+    # min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
+    #
+    # # return [min_result_1, min_result_2]
 
     """
     Baseline 2 : Mindless TSP (Google OR Tool) <<< Baseline 3 if done
@@ -110,7 +114,19 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
     # result_1, result_2, energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
     # return [min_result_1, min_result_2]
-    
+    """
+    K-Cluster as dropoff
+    """
+
+    name_index_map = {}
+    num_of_homes = len(list_of_homes)
+    home_list = []
+    for i in range(len(list_of_locations)):
+        name_index_map[list_of_locations[i]] = i;
+    for x in list_of_homes:
+        home_list += [name_index_map[x]]
+    d_result = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
+    print(kcluster(d_result, num_of_homes, home_list, 3))
 
 def subsetTSP(list_of_indices, int_adj_matrix):
     reduced_adj_matrix = []
