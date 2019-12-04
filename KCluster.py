@@ -3,7 +3,7 @@ sys.path.append('..')
 sys.path.append('../..')
 import random
 
-
+#This is the implementation of the algorithm from textbook 9.2.2
 def kcluster(dijkstra_result, number_of_houses, list_of_houses, k):
     x = random.randrange(0, number_of_houses, 1)
     result = [[]*k]
@@ -20,8 +20,8 @@ def kcluster(dijkstra_result, number_of_houses, list_of_houses, k):
                 continue
             min_dis = float('inf')
             for k in centers:
-                if dijkstra_result[k, j] < min_dis:
-                    min_dis = dijkstra_result[k, j]
+                if dijkstra_result[k][1][0].get[j] < min_dis:
+                    min_dis = dijkstra_result[k][1][0].get[j]
             if min_dis > max_dis:
                 max_dis = min_dis
                 next_center = j
@@ -35,8 +35,8 @@ def kcluster(dijkstra_result, number_of_houses, list_of_houses, k):
         dis = float('inf')
         cluster_to_join = 0
         for j in range(len(centers)):
-            if dijkstra_result[centers[j], i] < dis:
-                dis = dijkstra_result[centers[j], i]
+            if dijkstra_result[centers[j]][1][0].get[i] < dis:
+                dis = dijkstra_result[centers[j]][1][0].get[i]
                 cluster_to_join = j
         result[cluster_to_join] += [i]
         hash[i] = 1
