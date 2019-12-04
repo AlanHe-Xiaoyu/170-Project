@@ -78,7 +78,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     Soln 4 : randomize
     """
-    times = 100
+    times = 10
     selectivity_lst = [0.3, 0.6]
     for selectivity in selectivity_lst:
         for _ in range(times):
