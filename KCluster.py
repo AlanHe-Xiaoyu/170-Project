@@ -42,4 +42,4 @@ def kcluster(dijkstra_result, number_of_houses, list_of_houses, k):
                 cluster_to_join = j
         result[cluster_to_join] += [i]
         hash[i] = 1
-    return result
+    return result, centers
