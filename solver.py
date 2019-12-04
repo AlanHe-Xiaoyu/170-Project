@@ -82,13 +82,13 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     Soln 4 : randomize
     """
     times = 100
-    selectivity_lst = [0.3, 0.5, 0.7, 0.9]
+    selectivity_lst = [0.3, 0.6]
     for selectivity in selectivity_lst:
         for _ in range(times):
             random_homes_only_car_cycle = randomSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info, selectivity)
             random_send_home_result_1, random_send_home_result_2, random_send_home_energy = dropoffLocToOutput(random_homes_only_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
             if random_send_home_energy < minEnergy:
-                print(selectivity, "Success")
+                # print(selectivity, "Success")
                 min_result_1, min_result_2, minEnergy = random_send_home_result_1, random_send_home_result_2, random_send_home_energy
 
     return [min_result_1, min_result_2]
