@@ -63,10 +63,13 @@ def adjacency_matrix_to_edge_list(adjacency_matrix):
 def is_valid_walk(G, closed_walk):
     if len(closed_walk) == 2:
         return closed_walk[0] == closed_walk[1]
-    return all([(closed_walk[i], closed_walk[i+1]) in G.edges for i in range(len(closed_walk) - 1)])
-    # for i in range(len(closed_walk) - 1):
-    #     if (closed_walk[i], closed_walk[i+1]) not in G.edges:
-    #         print((closed_walk[i], closed_walk[i+1]))
+    # return all([(closed_walk[i], closed_walk[i+1]) in G.edges for i in range(len(closed_walk) - 1)])
+
+    for i in range(len(closed_walk) - 1):
+        if (closed_walk[i], closed_walk[i+1]) not in G.edges:
+            print((closed_walk[i], closed_walk[i+1]))
+            return False
+    return True
 
 
 def get_edges_from_path(path):

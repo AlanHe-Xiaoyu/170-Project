@@ -8,6 +8,7 @@
     3rd = total energy expenditure (need minimize, stored for self-reference)
 """
 def dropoffLocToOutput(car_route, shortest_path_info, list_of_homes, list_of_locs):
+    # print(car_route)
     dropoff_info = {}
     walking_dist = 0
     driving_dist = getDrivingDist(car_route, shortest_path_info)
@@ -27,6 +28,7 @@ def dropoffLocToOutput(car_route, shortest_path_info, list_of_homes, list_of_loc
         walking_dist += minDist
 
     total_energy = driving_dist * 2.0 / 3.0 + walking_dist
+    # print(car_route)
     return [car_route, dropoff_info, total_energy]
 
 

@@ -4,6 +4,7 @@ sys.path.append('..')
 sys.path.append('../..')
 import argparse
 import utils
+import random
 
 from student_utils import *
 from generateOutput import *
@@ -71,7 +72,24 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     if send_home_energy < minEnergy:
         min_result_1, min_result_2, minEnergy = send_home_result_1, send_home_result_2, send_home_energy
 
+    # return [min_result_1, min_result_2]
+
+    """
+    Soln 4 : randomize
+    """
+    times = 100
+    selectivity_lst = [0.3, 0.5, 0.7, 0.9]
+    for selectivity in selectivity_lst:
+        for _ in range(times):
+            random_homes_only_car_cycle = randomSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info, selectivity)
+            random_send_home_result_1, random_send_home_result_2, random_send_home_energy = dropoffLocToOutput(random_homes_only_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+            if random_send_home_energy < minEnergy:
+                print(selectivity, "Success")
+                min_result_1, min_result_2, minEnergy = random_send_home_result_1, random_send_home_result_2, random_send_home_energy
+
     return [min_result_1, min_result_2]
+
+
 
 
     """
@@ -108,9 +126,25 @@ def subsetTSP(list_of_indices, int_adj_matrix):
 Solution #3
 """
 def alwaysSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info):
+    return loc_to_go_TSP(list_of_locations, list_of_homes, starting_car_location, shortest_path_info)
+
+"""
+Soln #4
+"""
+def randomSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info, selectivity):
+    random_homes_to_go = []
+    for home in list_of_homes:
+        if random.random() < selectivity:
+            random_homes_to_go.append(home)
+    # print(random_homes_to_go)
+    return alwaysSendHome(list_of_locations, random_homes_to_go, starting_car_location, shortest_path_info)
+
+"""
+Helpers
+"""
+def loc_to_go_TSP(list_of_locations, places_to_TSP, starting_car_location, shortest_path_info):
     starting_idx = list_of_locations.index(starting_car_location)
-    homes_indices = [list_of_locations.index(i) for i in list_of_homes]
-    # print(str(homes_indices) + "HIIIIIII")
+    homes_indices = [list_of_locations.index(i) for i in places_to_TSP]
     num_homes = len(homes_indices)
     homes_int_adj_matrix = []
     for _ in range(num_homes):
@@ -123,19 +157,19 @@ def alwaysSendHome(list_of_locations, list_of_homes, starting_car_location, shor
             homes_int_adj_matrix[i][j] = homes_int_adj_matrix[j][i] = dist_ij
     homes_only_TSP_car_cycle = Google_OR.main_func(homes_int_adj_matrix, 1)
     _, final_homes_only_car_cycle = getShortestDistAndPath(shortest_path_info, starting_idx, homes_indices[homes_only_TSP_car_cycle[0]])
-    for i in range(1, len(homes_only_TSP_car_cycle)):
+    for i in range(1, len(homes_only_TSP_car_cycle) - 1):
         prev_car_idx, cur_car_idx = homes_only_TSP_car_cycle[i - 1], homes_only_TSP_car_cycle[i]
         actual_prev_car, actual_cur_car = homes_indices[prev_car_idx], homes_indices[cur_car_idx]
         _, sp_between = getShortestDistAndPath(shortest_path_info, actual_prev_car, actual_cur_car)
         final_homes_only_car_cycle.extend(sp_between[1:])
-    _, ending_path = getShortestDistAndPath(shortest_path_info, homes_indices[homes_only_TSP_car_cycle[-1]], starting_idx)
+    _, ending_path = getShortestDistAndPath(shortest_path_info, homes_indices[homes_only_TSP_car_cycle[-2]], starting_idx)
     final_homes_only_car_cycle.extend(ending_path[1:])
     return final_homes_only_car_cycle
 
 def getShortestDistAndPath(dijkstra_info, i, j):
     pair_info = dijkstra_info[i][1]
     dist, path = pair_info[0][j], pair_info[1][j]
-    return [dist, path]
+    return [dist, path[:]]
 
 def adj_matrix_to_int(adj_matrix):
     int_adj_matrix = []
@@ -145,7 +179,7 @@ def adj_matrix_to_int(adj_matrix):
         for j in range(size):
             dist = adj_matrix[i][j]
             if dist == 'x':
-                curRow.append(100000) # UGHH
+                curRow.append(10000000000000) # UGHH
             else:
                 curRow.append(int(dist))
         int_adj_matrix.append(curRow)
