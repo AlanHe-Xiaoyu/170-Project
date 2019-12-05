@@ -14,7 +14,7 @@ CS 170 Fall 2019 Project
     Should do (17) -- 46 -- (17) + (2) -- 49 -- (2) with 47 dropoff @46, 48 dropoff @49 --> cost = car 16 + walk 100000
 
 
-
+Soda loc17 loc43 loc38 loc31 loc1 loc11 loc13 loc23 loc42 loc23 loc13 loc11 loc39 loc37 loc15 loc37 loc39 loc16 loc38 loc43 loc12 Soda
 
 
 注：目前仅支持TSP over the entire graph
