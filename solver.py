@@ -62,12 +62,12 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     Baseline 1 : Drop off all @Soda
     """
-    # car_cycle = [list_of_locations.index(starting_car_location)]
-    # simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
-    # # print('Baseline 1 done')
-    # min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
-    #
-    # # return [min_result_1, min_result_2]
+    car_cycle = [list_of_locations.index(starting_car_location)]
+    simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    # print('Baseline 1 done')
+    min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
+    
+     # return [min_result_1, min_result_2]
 
     """
     Baseline 2 : Mindless TSP (Google OR Tool) <<< Baseline 3 if done
@@ -120,8 +120,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         times = 300
         selectivity_lst = [0.3, 0.4, 0.5]
     # 200
-    elif list_of_homes[:12] == ["loc45", "loc82", "loc90", "loc65", "loc151", "loc50", "loc83", "loc94", "loc34", "loc13", "loc74", "loc23"] and starting_car_location =
-    = 'Soda':
+    elif list_of_homes[:12] == ["loc45", "loc82", "loc90", "loc65", "loc151", "loc50", "loc83", "loc94", "loc34", "loc13", "loc74", "loc23"] and starting_car_location == 'Soda':
         car_route_50_idx = best_of_our_200
         car_route_50 = [list_of_locations.index(loc) for loc in car_route_50_idx]
         a, b, c = dropoffLocToOutput(car_route_50, shortest_path_info, list_of_homes, list_of_locations)
@@ -144,7 +143,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             if flag >= 5:
                 break
         
-
+    print("Start k-cluster")
     
     """
     K-Cluster as dropoff
@@ -178,7 +177,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
                 k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy = dropoffLocToOutput(random_k_cluster_cycle, shortest_path_info, list_of_homes, list_of_locations)
                 # print(k, k_cluster_result_energy)
                 if k_cluster_result_energy < minEnergy:
-#                    print("k_cluster", k, k_cluster_sel, "Success")
+                    print("k_cluster", k, k_cluster_sel, "Success")
                     k_flag = True
                     min_result_1, min_result_2, minEnergy = k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy
                 elif counter > 7:
@@ -455,7 +454,12 @@ if __name__=="__main__":
     output_directory = args.output_directory
     if args.all:
         input_directory = args.input
-        solve_all(input_directory, output_directory, params=args.params)
+#        solve_all(input_directory, output_directory, params=args.params)
+        try:
+            solve_all(input_directory, output_directory, params=args.params)
+        except:
+            os.system("python3 ./outputs/removeProcessed.py")
+            os.system("python3 ./solver.py --all inputs outputs")
     else:
         input_file = args.input
         solve_from_file(input_file, output_directory, params=args.params)
