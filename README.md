@@ -2,6 +2,10 @@
 CS 170 Fall 2019 Project
 # 170-Project
 
+11_50 : 10.219
+11_100 : 52.718
+11_200 : 13.284
+
 50 location name mapping : 
 50 pre-randomized solution :
 - Gadget1 Loop : (0) -- 30~34 -- (21)

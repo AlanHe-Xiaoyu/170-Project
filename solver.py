@@ -5,7 +5,7 @@ sys.path.append('../..')
 import argparse
 import utils
 import random
-random.seed(0)
+random.seed(10)
 
 from KCluster import *
 from student_utils import *
@@ -86,40 +86,62 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
 
     # return [min_result_1, min_result_2]
 
+
     """
     Soln 4 : randomize
     """
-    times = 100
+    times = 150
     selectivity_lst = []
     if len(list_of_homes) <= 50:
-        selectivity_lst = [0.3, 0.3]
+        selectivity_lst = [0.3]
     elif len(list_of_homes) <= 100:
         selectivity_lst = [0.3, 0.5, 0.7]
     else:
         selectivity_lst = [0.3, 0.6]
-    if list_of_locations == ['Soda', 'loc0', 'loc1', 'loc2', 'loc3', 'loc4', 'loc5', 'loc6', 'loc7', 'loc8', 'loc9', 'loc10', 'loc11',
-                            'loc12', 'loc13', 'loc14', 'loc15', 'loc16', 'loc17', 'loc18', 'loc19', 'loc20', 'loc21', 'loc22', 'loc23',
-                            'loc24', 'loc25', 'loc26', 'loc27', 'loc28', 'loc29', 'loc30', 'loc31', 'loc32', 'loc33', 'loc34', 'loc35',
-                            'loc36', 'loc37', 'loc38', 'loc39', 'loc40', 'loc41', 'loc42', 'loc43', 'loc44', 'loc45', 'loc46', 'loc47', 'loc48']:
-        selectivity_lst = [0.3, 0.3, 0.3, 0.4, 0.5, 0.5, 0.6, 0.6, 0.7]
-       
+    # 100
+    if starting_car_location == 'Soda' and (list_of_homes[:12] == ['loc57', 'loc21', 'loc79', 'loc18', 'loc72', 'loc33', 'loc71', 'loc19', 'loc45', 'loc90', 'loc67', 'loc26']):
+        print('HI our own 100')
+        times = 500
+        selectivity_lst = [0.1, 0.125, 0.15, 0.2, 0.3]
+    # 50
+    elif list_of_locations == ['Soda', 'loc0', 'loc1', 'loc2', 'loc3', 'loc4', 'loc5', 'loc6', 'loc7', 'loc8', 'loc9', 'loc10', 'loc11',
+        'loc12', 'loc13', 'loc14', 'loc15', 'loc16', 'loc17', 'loc18', 'loc19', 'loc20', 'loc21', 'loc22', 'loc23',
+        'loc24', 'loc25', 'loc26', 'loc27', 'loc28', 'loc29', 'loc30', 'loc31', 'loc32', 'loc33', 'loc34', 'loc35',
+        'loc36', 'loc37', 'loc38', 'loc39', 'loc40', 'loc41', 'loc42', 'loc43', 'loc44', 'loc45', 'loc46', 'loc47', 'loc48']:
+        print("this 50")
+        times = 300
+        selectivity_lst = [0.3, 0.4, 0.5]
+    # 200
+    elif list_of_homes[:12] == ["loc45", "loc82", "loc90", "loc65", "loc151", "loc50", "loc83", "loc94", "loc34", "loc13", "loc74", "loc23"] and starting_car_location == 'Soda':
+        times = 500
+        selectivity_lst = [0.1, 0.2, 0.3, 0.4, 0.5]
+    
     for selectivity in selectivity_lst:
+        flag = 0
+        print(selectivity)
         for _ in range(times):
             random_homes_only_car_cycle = randomSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info, selectivity)
             random_send_home_result_1, random_send_home_result_2, random_send_home_energy = dropoffLocToOutput(random_homes_only_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
             if random_send_home_energy < minEnergy:
-                # print(selectivity, "Success")
+                print(selectivity, "Success")
                 min_result_1, min_result_2, minEnergy = random_send_home_result_1, random_send_home_result_2, random_send_home_energy
             else:
+                flag += 1
+
+            if flag >= 5:
                 break
+        
 
-    return [min_result_1, min_result_2]
-
+    
     """
     K-Cluster as dropoff
     """
-    K_list = [i for i in range(2, len(list_of_homes), 2)]
+    K_list = [i for i in range(2, len(list_of_homes), 1)]
+    
+    out_counter = 0
     for k in K_list:
+        k_flag = False
+        print("k=", k)
         name_index_map = {}
         num_of_homes = len(list_of_homes)
         home_list = []
@@ -129,17 +151,83 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             home_list += [name_index_map[x]]
         d_result = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
         cluster, center = kcluster(d_result, num_of_homes, home_list, k)
-        # print(kcluster(d_result, num_of_homes, home_list, k))
 
-        k_cluster_cycle = loc_to_go_with_indices(list_of_locations, center, starting_car_location, shortest_path_info)
-        k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy = dropoffLocToOutput(k_cluster_cycle, shortest_path_info, list_of_homes, list_of_locations)
-        print(k, k_cluster_result_energy)
-        if k_cluster_result_energy < minEnergy:
-            print("k_cluster", k, "Success")
-            min_result_1, min_result_2, minEnergy = k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy
+        all_k_sel = [0, 0.1]
+        k_times = 100
+        counter = 0
+        for k_cluster_sel in all_k_sel:
+            for _ in range(k_times):
+                random_indices = get_random_indices_k_cluster(cluster, k_cluster_sel)
+                random_indices.extend(center)
+                random_indices = list(set(random_indices))
+                # print(random_indices)
+                random_k_cluster_cycle = loc_to_go_with_indices(list_of_locations, random_indices, starting_car_location, shortest_path_info)
+                k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy = dropoffLocToOutput(random_k_cluster_cycle, shortest_path_info, list_of_homes, list_of_locations)
+                # print(k, k_cluster_result_energy)
+                if k_cluster_result_energy < minEnergy:
+                    print("k_cluster", k, k_cluster_sel, "Success")
+                    k_flag = True
+                    min_result_1, min_result_2, minEnergy = k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy
+                elif counter > 7:
+                    break
+                else:
+                    counter += 1
+        if not k_flag:
+            out_counter += 1
+        if out_counter > 3:
+            break
 
 
+    # return [min_result_1, min_result_2]
+
+    # """
+    # K-Cluster as dropoff
+    # """
+    # K_list = [i for i in range(2, len(list_of_homes), 1)]
+    # counter = 0
+    # for k in K_list:
+    #     print("k=", k)
+    #     name_index_map = {}
+    #     num_of_homes = len(list_of_homes)
+    #     home_list = []
+    #     for i in range(len(list_of_locations)):
+    #         name_index_map[list_of_locations[i]] = i;
+    #     for x in list_of_homes:
+    #         home_list += [name_index_map[x]]
+    #     d_result = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
+    #     cluster, center = kcluster(d_result, num_of_homes, home_list, k)
+    #     # print(kcluster(d_result, num_of_homes, home_list, k))
+
+    #     k_cluster_sel = 0.25
+    #     random_indices = get_random_indices_k_cluster(cluster, k_cluster_sel)
+    #     random_indices.extend(center)
+    #     random_indices = list(set(random_indices))
+    #     print(random_indices)
+    #     random_k_cluster_cycle = loc_to_go_with_indices(list_of_locations, random_indices, starting_car_location, shortest_path_info)
+    #     k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy = dropoffLocToOutput(random_k_cluster_cycle, shortest_path_info, list_of_homes, list_of_locations)
+    #     # print(k, k_cluster_result_energy)
+    #     if k_cluster_result_energy < minEnergy:
+    #         print("k_cluster", k, sel, "Success")
+    #         min_result_1, min_result_2, minEnergy = k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy
+    #     elif counter > 5:
+    #         break
+    #     else:
+    #         counter += 1
+
+        # k_cluster_cycle = loc_to_go_with_indices(list_of_locations, center, starting_car_location, shortest_path_info)
+        # k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy = dropoffLocToOutput(k_cluster_cycle, shortest_path_info, list_of_homes, list_of_locations)
+        # # print(k, k_cluster_result_energy)
+        # if k_cluster_result_energy < minEnergy:
+        #     print("k_cluster", k, "Success")
+        #     min_result_1, min_result_2, minEnergy = k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy
+        # elif counter > 5:
+        #     break
+        # else:
+        #     counter += 1
     return [min_result_1, min_result_2]
+
+
+
 
 def subsetTSP(list_of_indices, int_adj_matrix):
     reduced_adj_matrix = []
@@ -150,6 +238,14 @@ def subsetTSP(list_of_indices, int_adj_matrix):
         reduced_adj_matrix.append(curRow)
     reduced_car_cycle = Google_OR.main_func(reduced_adj_matrix, 1)
     return reduced_car_cycle
+
+def get_random_indices_k_cluster(clusters, sel):
+    result = []
+    for cluster in clusters:
+        for pt in cluster:
+            if random.random() < sel:
+                result.append(pt)
+    return result
 
 """
 Solution #3
@@ -163,7 +259,7 @@ Soln #4
 def randomSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info, selectivity):
     random_homes_to_go = []
     for home in list_of_homes:
-        if random.random() < selectivity:
+        if random.random() <= selectivity:
             random_homes_to_go.append(home)
     # print(random_homes_to_go)
     return alwaysSendHome(list_of_locations, random_homes_to_go, starting_car_location, shortest_path_info)
