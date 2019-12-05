@@ -20,7 +20,7 @@ import output_validator
 """
 # 279428.6666666666
 best_of_our_50 = ["Soda", "loc43", "loc38", "loc20", "loc45", "loc31", "loc1", "loc11", "loc2", "loc22", "loc41", "loc14", "loc15", "loc37", "loc39", "loc16", "loc44", "loc29", "loc11", "loc38", "loc43", "loc35", "loc30", "loc35", "loc43", "Soda"]
-
+best_of_our_200 = ["Soda", "loc3", "loc179", "loc45", "loc129", "loc17", "loc23", "loc74", "loc13", "loc34", "loc14", "loc121", "loc14", "loc34", "loc13", "loc74", "loc23", "loc17", "loc129", "loc168", "loc43", "loc27", "loc38", "loc193", "loc37", "loc27", "loc43", "loc92", "loc75", "loc137", "loc75", "loc92", "loc43", "loc27", "loc55", "loc77", "loc173", "loc107", "loc173", "loc77", "loc111", "loc150", "loc165", "loc8", "loc164", "loc47", "loc87", "loc192", "loc170", "loc196", "loc51", "loc196", "loc170", "loc192", "loc87", "loc47", "loc164", "loc111", "loc30", "loc111", "loc131", "loc27", "loc43", "loc50", "loc74", "loc23", "loc17", "loc129", "loc179", "loc53", "loc25", "loc106", "loc172", "loc106", "Soda"]
 
 
 def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_matrix, params=[]):
