@@ -5,6 +5,7 @@ sys.path.append('../..')
 import argparse
 import utils
 import random
+import time
 random.seed(10)
 
 from KCluster import *
@@ -164,7 +165,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         if wsy_energy < minEnergy:
             print("WSY SUCCESS")
             min_result_1, min_result_2, minEnergy = wsy_1, wsy_2, wsy_energy
-            
+
 
         all_k_sel = [0, 0.1, 0.2, 0.9]
         k_times = 100
@@ -191,15 +192,17 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         if out_counter > 3:
             break
 
-    if len(min_result_1) == 1:
-        return [min_result_1, min_result_2]
-    else:
-        anneal_result1, anneal_result2, anneal_e = runAnneal(min_result_1, shortest_path_info, list_of_homes, list_of_locations)
-        if anneal_e < minEnergy:
-            min_result_1 = anneal_result1
-            min_result_2 = anneal_result2
-            minEnergy = anneal_e
-            print("Annealing worked!")
+    # try:
+    #     if len(min_result_1) == 1:
+    #         return [min_result_1, min_result_2]
+    #     else:
+    #         anneal_result1, anneal_result2, anneal_e = runAnneal(min_result_1, shortest_path_info, list_of_homes, list_of_locations)
+    #         if anneal_e < minEnergy:
+    #             min_result_1 = anneal_result1
+    #             min_result_2 = anneal_result2
+    #             minEnergy = anneal_e
+    #             print("Annealing worked!")
+    # except:
     return [min_result_1, min_result_2]
 
 
