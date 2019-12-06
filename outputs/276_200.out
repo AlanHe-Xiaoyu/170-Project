@@ -1,9 +1,9 @@
-Granbull Electrode Flygon Crabominable Rufflet Arbok Metapod Chespin Cascoon Krookodile Corphish Azurill Crawdaunt Cosmog Smeargle Staravia Feraligatr Staravia Tsareena Gliscor Grumpig Budew Skitty Kangaskhan Jirachi Magikarp Carnivine Mantine Luvdisc Reshiram Golbat Cinccino Heatmor Serperior Bergmite Serperior Deoxys Spiritomb Spinda Mawile Trumbeak Magmortar Goomy Raichu Lycanroc Whimsicott Pancham Vivillon Pancham Mudsdale Pidgeot Mudsdale Greninja Whiscash Rockruff Ninjask Slakoth Chatot Electrike Lampent Heatran Charmander Ampharos Altaria Malamar Altaria Sylveon Bonsly Chinchou Typhlosion Floette Beedrill Butterfree Cubone TypeNull Electivire Probopass Glalie Mimikyu Swanna Lucario Dustox Aipom Nuzleaf Aipom Buizel Jolteon Torchic Binacle Exeggcute Torracat Lapras Hitmontop Absol Lileep Remoraid Machamp Torkoal Diggersby Darkrai Mightyena Bronzor Carbink Metagross Carbink Infernape Volcanion Charizard Tyrunt Relicanth Floatzel Blissey Magmar Metang Reuniclus Bulbasaur Granbull
-95
+Granbull Flygon Electrode PorygonZ Grumpig Budew Whimsicott Lycanroc Cinccino Heatmor Serperior Bergmite Serperior Charmander Heatran Golbat Reshiram Carbink Metagross Deoxys Staryu Nuzleaf Aipom Dustox Aipom Buizel Jolteon Torchic Cascoon Krookodile Corphish Azurill Crawdaunt Cosmog Smeargle Lampent Electrike Unown Relicanth Floatzel Feraligatr Luvdisc Mantine Carnivine Roserade Bronzor Mightyena Butterfree Cubone Fletchling Probopass Malamar Altaria Sylveon Bonsly Chinchou Typhlosion Chespin Metapod Arbok Raichu Chatot Slakoth Ninjask Rockruff Whiscash Quilava Rufflet Crabominable Kyurem Ampharos Trumbeak Mawile Spiritomb Spinda Blissey Magmar Binacle Exeggcute Torracat Lapras Hitmontop Absol Lileep Goomy Magmortar Happiny Machamp Remoraid Machamp Pidgeot Mudsdale Pancham Vivillon Pancham Mudsdale Greninja Torkoal Greninja Tsareena Gliscor TypeNull Floette Spewpa Infernape Volcanion Charizard Glalie Mimikyu Beedrill Jirachi Glaceon Skitty Kangaskhan Lombre Diggersby Darkrai Swanna Reuniclus Bulbasaur Granbull
+100
 Tsareena Tsareena
 Absol Absol
-Relicanth Unown Relicanth
-Bronzor Roserade Bronzor
+Unown Unown
+Roserade Roserade
 Dustox Dustox
 Heatran Heatran
 Butterfree Butterfree
@@ -18,8 +18,8 @@ Chinchou Chinchou
 Crawdaunt Crawdaunt
 Slakoth Slakoth
 Mimikyu Mimikyu
-Machamp Happiny Machamp
-Rufflet Quilava Rufflet
+Happiny Happiny
+Quilava Quilava
 Kangaskhan Kangaskhan
 Rockruff Rockruff
 Bonsly Bonsly
@@ -40,6 +40,7 @@ Charizard Charizard
 Gliscor Gliscor
 Binacle Binacle
 Raichu Raichu
+Relicanth Relicanth
 Cubone Cubone
 Krookodile Krookodile
 Heatmor Heatmor
@@ -58,16 +59,19 @@ Darkrai Darkrai
 Reuniclus Reuniclus
 Remoraid Remoraid
 Magmar Magmar
+Rufflet Rufflet
 Reshiram Reshiram
 Crabominable Crabominable
+Machamp Machamp
 Charmander Charmander
-Electrode Electrode PorygonZ
+Electrode Electrode
 Serperior Serperior
 Golbat Golbat
 Infernape Infernape
 Hitmontop Hitmontop
 Trumbeak Trumbeak
 Flygon Flygon
+Bronzor Bronzor
 Bergmite Bergmite
 Torkoal Torkoal
 Goomy Goomy
@@ -83,6 +87,7 @@ Magmortar Magmortar
 Electrike Electrike
 Lileep Lileep
 Ninjask Ninjask
+PorygonZ PorygonZ
 Feraligatr Feraligatr
 Floatzel Floatzel
 Glalie Glalie

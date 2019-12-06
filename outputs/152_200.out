@@ -1,12 +1,12 @@
-Chattanooga Cleveland SanAntonio Memphis Wichita Fayetteville Aurora Baltimore Lexington Aurora Orange Frisco KansasCity Gilbert Denton Gilbert Tallahassee Buffalo Pomona FortCollins Palmdale Syracuse Irvine Norfolk SaintPaul Washington Chandler Arlington ChulaVista Arlington SanDiego Sunnyvale Boise SanBernardino Joliet Madison Lincoln OklahomaCity SantaAna OklahomaCity Fontana Oceanside Paterson Cincinnati LongBeach GrandPrairie LongBeach Waco Albuquerque LosAngeles Albuquerque Orlando Naperville Chicago Portland Glendale VirginiaBeach FortWorth Corona Lubbock Louisville Lubbock Corona Olathe Mobile Midland Anchorage Phoenix Indianapolis Riverside Indianapolis FortLauderdale Savannah GrandRapids Fresno Worcester Fresno CapeCoral LittleRock Shreveport Macon Montgomery SanJose Jacksonville Clarksville StPetersburg Toledo GardenGrove Salinas Murfreesboro Charlotte Murfreesboro Salinas Bakersfield Carrollton Surprise OverlandPark Scottsdale Tempe Scottsdale Austin Vancouver Detroit Pasadena McAllen ElkGrove SanFrancisco Honolulu Fremont Huntsville Tacoma Oxnard Spokane Springfield Berkeley Knoxville WinstonSalem Cincinnati DesMoines NewportNews Alexandria HuntingtonBeach Jackson Brownsville Boston Salem Ontario TianamenSquare RanchoCucamonga Newark RanchoCucamonga Akron Hayward SantaClarita NewYork Anaheim MorenoValley Durham Yonkers Plano Dayton ElPaso Chattanooga
-97
+Chattanooga Cleveland SanAntonio Memphis Roseville FortWorth Corona Lubbock Louisville Lubbock Corona Olathe Mobile GrandPrairie LongBeach Cincinnati Paterson Cincinnati DesMoines NewportNews Alexandria Spokane Springfield Berkeley Knoxville GardenGrove Salinas Murfreesboro Charlotte SanDiego Sunnyvale Boise SanBernardino Fremont Honolulu SanFrancisco Honolulu Miramar PortStLucie Chandler Washington SaintPaul Norfolk Raleigh Hayward SantaClarita Hayward Jacksonville SanJose Denton Madison Joliet Madison Lincoln Fontana OklahomaCity SantaAna OklahomaCity Irvine Syracuse NewYork Anaheim ChulaVista Anaheim MorenoValley Henderson Toledo Atlanta Chicago Naperville Orlando Albuquerque Waco Albuquerque Pomona Buffalo Tallahassee MorenoValley Durham Yonkers Plano Fresno GrandRapids Savannah FortLauderdale Indianapolis Riverside Scottsdale Tempe Scottsdale Austin Vancouver Detroit BatonRouge Bakersfield Oceanside CapeCoral LittleRock Phoenix Oxnard McAllen Newark RanchoCucamonga TianamenSquare Ontario Salem Boston Brownsville Jackson KansasCity Frisco Orange Aurora Lexington Baltimore Aurora Fayetteville Richmond Stockton Surprise Anchorage Midland Dayton ElPaso Chattanooga
+95
 Yonkers Yonkers
 Alexandria Alexandria
 Joliet Joliet
 Orlando Orlando
 Lincoln Lincoln
-Worcester Worcester
-LittleRock LittleRock
+Fresno Worcester Glendale
+LittleRock LittleRock Shreveport
 GardenGrove GardenGrove
 Aurora Aurora
 DesMoines DesMoines
@@ -16,17 +16,16 @@ Knoxville Knoxville
 Jacksonville Jacksonville
 Oceanside Oceanside
 Baltimore Baltimore
-MorenoValley Henderson
+Henderson Henderson
 Fremont Fremont
 Riverside Riverside
-Memphis Memphis
+Memphis Memphis Wichita
 SanBernardino SanBernardino
-Tacoma Tacoma
-Wichita Wichita
+Oxnard Tacoma Oxnard
 Paterson Paterson
 Washington Washington
 Ontario Ontario
-Bakersfield Bakersfield BatonRouge
+Bakersfield Bakersfield
 SantaClarita SantaClarita
 Cleveland Cleveland
 Brownsville Brownsville
@@ -38,8 +37,6 @@ Springfield Springfield
 Denton Denton
 Tempe Tempe
 Spokane Spokane
-Glendale Glendale
-Shreveport Shreveport
 GrandPrairie GrandPrairie
 Irvine Irvine
 NewportNews NewportNews
@@ -47,18 +44,17 @@ Lexington Lexington
 Olathe Olathe
 SanFrancisco SanFrancisco
 Scottsdale Scottsdale
-Vancouver Vancouver PortStLucie
+Vancouver Vancouver
 Indianapolis Indianapolis
 Murfreesboro Murfreesboro
 Anchorage Anchorage
 FortWorth FortWorth
 Austin Austin
-Norfolk Raleigh
+Raleigh Raleigh
 Anaheim Anaheim
 SanJose SanJose
-Fayetteville Fayetteville Richmond
+Fayetteville Fayetteville
 Cincinnati Cincinnati
-Oxnard Oxnard
 Durham Durham
 ChulaVista ChulaVista
 SantaAna SantaAna
@@ -72,27 +68,29 @@ NewYork NewYork
 Savannah Savannah
 CapeCoral CapeCoral
 Louisville Louisville
-Hayward Hayward
+Hayward Hayward Akron
 Buffalo Buffalo
+BatonRouge BatonRouge
 Boston Boston
 Boise Boise
 Waco Waco
 Chicago Chicago
 SanAntonio SanAntonio
 KansasCity KansasCity
+Richmond Richmond
 Tallahassee Tallahassee
 Salem Salem
 Midland Midland
-LosAngeles LosAngeles
+Albuquerque LosAngeles
 Fontana Fontana
 Berkeley Berkeley
+PortStLucie PortStLucie
 Plano Plano
 Orange Orange
 Newark Newark
 Toledo Toledo
 Naperville Naperville
 Jackson Jackson
-Akron Akron
 Pomona Pomona
 Lubbock Lubbock
 Frisco Frisco

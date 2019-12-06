@@ -1,12 +1,12 @@
-Hayward SantaClara Hayward CedarRapids Burbank Chicago Burbank Danbury Atlanta Abilene GrandRapids Abilene Downey SaintLouis Harlingen Waco NewOrleans Waterloo Durham Bloomington Durham Deltona Corona Modesto Hampton RichmondCounty Charlotte Hickory HuntingtonBeach Hickory Winston Memphis Winston Murrieta Tampa Murrieta Winston Hickory Tyler Kennewick Barnstable Kennewick NewYorkCity Newark LakeCharles Washington Tucson Aurora Bakersfield Aurora NewBedford York BelAir Monroe BelAir McAllen Allentown Springdale McHenry Torrance PalmBay Tucson Bradenton SaintPaul PuntaGorda Omaha Topeka Montgomery SantaCruz Montgomery ThousandOaks Asheville Hayward
-48
+Hayward SantaClara Hayward CedarRapids Memphis Winston Murrieta Tampa Murrieta Fontana SantaCruz Montgomery Topeka Omaha PuntaGorda SaintPaul Bradenton Tucson PalmBay Torrance McHenry Springdale Barnstable Medford GulfportBiloxi Chicago Burbank Danbury Atlanta Abilene GrandRapids Abilene Downey SaintLouis Harlingen Waco NewOrleans Waterloo Yonkers Huntsville KansasCity McAllen BelAir Monroe BelAir York NewBedford Aurora Bakersfield Aurora Tucson Washington LakeCharles Newark NewYorkCity Kennewick Tyler Hickory HuntingtonBeach Hickory Charlotte RichmondCounty Hampton Modesto Corona Deltona Durham Bloomington Durham Asheville Hayward
+50
 PuntaGorda PuntaGorda
 Tyler Tyler
-ThousandOaks ThousandOaks
+Montgomery ThousandOaks
 PalmBay PalmBay
 Tucson Tucson
 Barnstable Barnstable
-Waterloo Yonkers Waterloo
+Yonkers Yonkers
 Burbank Burbank
 McHenry McHenry
 Harlingen Harlingen
@@ -24,11 +24,12 @@ BelAir BelAir
 Aurora Aurora
 CedarRapids CedarRapids
 LakeCharles LakeCharles
-Bradenton Bradenton Huntsville
+Bradenton Bradenton
 RichmondCounty RichmondCounty
 SantaCruz SantaCruz
 Modesto Modesto
 HuntingtonBeach HuntingtonBeach
+Huntsville Huntsville
 NewYorkCity NewYorkCity
 Tampa Tampa
 Monroe Monroe
@@ -47,4 +48,5 @@ SaintPaul SaintPaul
 York York
 Hickory Hickory
 Waco Waco
+Waterloo Waterloo
 Hampton Hampton
