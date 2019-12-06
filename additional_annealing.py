@@ -1,16 +1,18 @@
 from generateOutput import *
+from solver import *
 from simanneal import Annealer
 import random
 import numpy as np
 class DTHProblem(Annealer):
     """Test annealer with a travelling salesman problem."""
     def __init__(self, initialList, shortest_path_info, list_of_homes, list_of_locs):
+        print(initialList)
         self.shortest_path_info = shortest_path_info
         self.list_of_homes = list_of_homes
-        self.list_of_locs = list_of_locs
+        self.list_of_locs = list(range(len(list_of_locs))) #index
+        self.original_loc = list_of_locs #name
         super(DTHProblem, self).__init__(initialList)
     def move(self):
-        print("one step")
         initial_energy = self.energy()
         """ 0 - add, 1-remove, 2-randomly swap"""
         add_weight = 1.0
@@ -30,7 +32,7 @@ class DTHProblem(Annealer):
             choices = [0]
             weights = [1.0]
         else:
-            if len(self.state) > 1:
+            if len(self.state) > 2:
                 choices = [0,1,2]
                 weights = [add_weight, remove_weight, swap_weight]
             else:
@@ -38,20 +40,28 @@ class DTHProblem(Annealer):
                 weights = [add_weight]
         method = np.random.choice(choices)
         if method == 2:
-            a = random.randint(1, len(self.state) - 2)
-            b = random.randint(1, len(self.state) - 2)
-            self.state[a], self.state[b] = self.state[b], self.state[a]
+             g = 1+1
+#            a = random.randint(1, len(self.state) - 2)
+#            b = random.randint(1, len(self.state) - 2)
+#            self.state[a], self.state[b] = self.state[b], self.state[a]
         elif method == 1:
             a = random.randint(1, len(self.state) - 2)
+            path_to_add = getShortestDistAndPath(self.shortest_path_info, self.state[a-1], self.state[a+1])[1]
+            path_to_add = path_to_add[1:-1]
             self.state.pop(a)
+            self.state[a:a] = path_to_add
         else:
             a = random.choice(not_included)
-            b = random.randint(1, len(not_included) - 2)
-            self.state.insert(b, a)
+            b = random.randint(1, len(self.state) - 2)
+            path_before_a = getShortestDistAndPath(self.shortest_path_info, self.state[b-1], a)[1]
+            path_before_a = path_before_a[1:]
+            path_after_a = getShortestDistAndPath(self.shortest_path_info, a, self.state[b+1])[1]
+            added_path = path_before_a + path_after_a[1:-1]
+            self.state[b:b] = added_path
         return self.energy() - initial_energy
         
     def energy(self):
-        _, __, ennn = dropoffLocToOutput(self.state, self.shortest_path_info, self.list_of_homes, self.list_of_locs)
+        _, __, ennn = dropoffLocToOutput(self.state, self.shortest_path_info, self.list_of_homes, self.original_loc)
         return ennn
         
 def runAnneal(initialList, shortest_path_info, list_of_homes, list_of_locs):
