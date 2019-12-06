@@ -1,5 +1,5 @@
 from generateOutput import *
-from solver import *
+# from solver import *
 from simanneal import Annealer
 import random
 import numpy as np
@@ -46,6 +46,7 @@ class DTHProblem(Annealer):
 #            self.state[a], self.state[b] = self.state[b], self.state[a]
         elif method == 1:
             a = random.randint(1, len(self.state) - 2)
+            # print(self.state)
             path_to_add = getShortestDistAndPath(self.shortest_path_info, self.state[a-1], self.state[a+1])[1]
             path_to_add = path_to_add[1:-1]
             self.state.pop(a)
@@ -67,7 +68,7 @@ class DTHProblem(Annealer):
 def runAnneal(initialList, shortest_path_info, list_of_homes, list_of_locs):
     print("Start annealing")
     tsp = DTHProblem(initialList, shortest_path_info, list_of_homes, list_of_locs)
-    tsp.set_schedule(tsp.auto(minutes=0.2))
+    tsp.set_schedule(tsp.auto(minutes=0.02))
     tsp.copy_strategy = "slice"
     res, e = tsp.anneal()
     res1, res2, en = dropoffLocToOutput(res, shortest_path_info, list_of_homes, list_of_locs)
@@ -87,12 +88,25 @@ def runAnneal(initialList, shortest_path_info, list_of_homes, list_of_locs):
 #
 #    pass
 
+"""
+Helpers
+"""
 
 def dropAllAtSoda(all_locs, homes, start_loc, shortest_path_info):
     car_route = [all_locs.index(start_loc)]
     return dropoffLocToOutput(car_route, shortest_path_info, homes, all_locs)
 
-
+def getShortestDistAndPath(dijkstra_info, i, j):
+    pair_info = dijkstra_info[i][1]
+    if i == j:
+        # print("ERROR shouldnt be here")
+        return [0, [i]]
+    # print(i, j)
+    # print(dijkstra_info)
+    # print(j)
+    dist = pair_info[0][j]
+    path = pair_info[1][j]
+    return [dist, path[:]]
 
 if __name__ == "__main__":
     anneal()
