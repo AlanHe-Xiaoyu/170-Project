@@ -2,6 +2,20 @@
 CS 170 Fall 2019 Project
 # 170-Project
 
+Sources:
+1. TSP solver : Google optimization team https://developers.google.com/optimization/routing/vrp
+2. Simulated annealing : https://github.com/perrygeo/simanneal
+
+How to run?
+1. python3 solver.py --all inputs final_outputs
+- if anything fails, drag it out, and rerun individually at the very end
+2. python3 compress_output.py final_outputs/
+
+
+
+
+Rest are for our own purposes
+
 11_50 : 10.219
 11_100 : 52.718
 11_200 : 13.284
