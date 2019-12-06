@@ -169,7 +169,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         wsy_1, wsy_2, wsy_energy = dropoffLocToOutput(wsy_cycle, shortest_path_info, list_of_homes, list_of_locations)
         if wsy_energy < minEnergy:
             print("WSY SUCCESS")
-            print("WST energy = ", wsy_energy, minEnergy)
+            # print("WST energy = ", wsy_energy, minEnergy)
             min_result_1, min_result_2, minEnergy = wsy_1, wsy_2, wsy_energy
 
 
