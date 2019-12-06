@@ -2,6 +2,7 @@ import sys
 sys.path.append('..')
 sys.path.append('../..')
 import random
+from solver import *
 
 #This is the implementation of the algorithm from textbook 9.2.2
 def kcluster(dijkstra_result, number_of_houses, list_of_houses, k):
@@ -43,3 +44,22 @@ def kcluster(dijkstra_result, number_of_houses, list_of_houses, k):
         result[cluster_to_join] += [i]
         hash[i] = 1
     return result, centers
+
+
+def goodpoints(list_of_houses, dijkstra_result):
+    num_locs = len(dijkstra_result)
+    hash = [0] * num_locs
+    for i1 in range(len(list_of_houses)):
+        for j1 in range(i1+1, len(list_of_houses)):
+            i = list_of_houses[i1]
+            j = list_of_houses[j1]
+            if i != j:
+                a, path = getShortestDistAndPath(dijkstra_result, i, j)
+                for z in range(1, len(path) - 1):
+                    v = path[z]
+                    hash[v] += 1
+    result = []
+    for i in range(len(hash)):
+        if hash[i] > len(list_of_houses) / 10:
+            result += [i]
+    return result
