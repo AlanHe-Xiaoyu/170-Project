@@ -46,7 +46,7 @@ def kcluster(dijkstra_result, number_of_houses, list_of_houses, k):
     return result, centers
 
 
-def goodpoints(list_of_houses, dijkstra_result):
+def goodpoints(list_of_houses, dijkstra_result, threshold=10):
     num_locs = len(dijkstra_result)
     hash = [0] * num_locs
     for i1 in range(len(list_of_houses)):
@@ -60,6 +60,6 @@ def goodpoints(list_of_houses, dijkstra_result):
                     hash[v] += 1
     result = []
     for i in range(len(hash)):
-        if hash[i] > len(list_of_houses) / 10:
+        if hash[i] > threshold:
             result += [i]
     return result
