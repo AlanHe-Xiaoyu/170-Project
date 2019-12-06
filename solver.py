@@ -120,7 +120,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         selectivity_lst = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
     else:
         selectivity_lst = [0.3, 0.6]
-        
+
     for selectivity in selectivity_lst:
         flag = 0
         print(selectivity)
@@ -157,6 +157,14 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             home_list += [name_index_map[x]]
         d_result = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
         cluster, center = kcluster(d_result, num_of_homes, home_list, k)
+
+        wsy_idea = goodpoints(home_list, shortest_path_info)
+        wsy_cycle = loc_to_go_with_indices(list_of_locations, wsy_idea, starting_car_location, shortest_path_info)
+        wsy_1, wsy_2, wsy_energy = dropoffLocToOutput(wsy_cycle, shortest_path_info, list_of_homes, list_of_locations)
+        if wsy_energy < minEnergy:
+            print("WSY SUCCESS")
+            min_result_1, min_result_2, minEnergy = wsy_1, wsy_2, wsy_energy
+            
 
         all_k_sel = [0, 0.1, 0.2, 0.9]
         k_times = 100
