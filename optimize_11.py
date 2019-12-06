@@ -16,15 +16,16 @@ import input_validator
 import output_validator
 
 def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_matrix, params=[]):
-    return [[0, 64, 8, 31, 41, 31, 8, 64, 63, 86, 96, 53, 29, 95, 29, 53, 96, 86, 63, 21, 22, 43, 26, 67, 90, 45, 66, 45, 90, 67, 26, 43, 22, 0], {63: [57, 72, 30, 23, 61, 12], 21: [21, 40, 44, 39, 89], 0: [79, 18], 67: [33, 71, 67], 43: [19, 43], 45: [45, 49, 73, 20, 32, 48, 81, 93], 90: [90], 26: [26], 66: [66, 36, 97], 8: [17, 8, 83, 91, 68], 31: [31], 41: [41, 38], 53: [92, 53, 55, 13], 96: [96], 86: [86, 10, 99], 29: [29], 95: [28, 95]}]
+    # return [[0, 3, 63, 12, 92, 53, 29, 95, 29, 53, 96, 86, 63, 22, 43, 26, 67, 90, 45, 66, 45, 90, 67, 26, 43, 22, 64, 8, 31, 41, 31, 8, 64, 0], {63: [57, 30, 23, 61], 22: [21], 0: [79, 18], 3: [72, 40, 44, 39, 89], 67: [33, 71, 67], 43: [19, 43], 45: [45, 49, 73, 20, 32, 48, 81, 93], 90: [90], 26: [26], 66: [66, 36, 97], 8: [17, 8, 83, 91, 68], 31: [31], 41: [41, 38], 12: [12], 92: [92], 53: [53, 55, 13], 96: [96, 99], 86: [86, 10], 29: [29], 95: [28, 95]}]
     
     G, message = adjacency_matrix_to_graph(adjacency_matrix)
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
 
     min_a, min_b, min_energy = None, None, float('inf')
-    flag = False
+    
     for n in range(len(list_of_homes)):
         print(n)
+        flag = False
         for subset_homes in list(itertools.combinations(list_of_homes, n)):
             subset_cycle = loc_to_go_TSP(list_of_locations, subset_homes, starting_car_location, shortest_path_info)
             a, b, energy = dropoffLocToOutput(subset_cycle, shortest_path_info, list_of_homes, list_of_locations)
