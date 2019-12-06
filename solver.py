@@ -71,6 +71,21 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         best_200_route_idx = [list_of_locations.index(i) for i in best_200_route]
         min_result_1, min_result_2, minEnergy = dropoffLocToOutput(best_200_route_idx, shortest_path_info, list_of_homes, list_of_locations)
 
+    # TODO: run alan+wsy idea (below)
+    start_and_homes = [starting_car_location] + list_of_homes
+    start_and_homes_idx = [list_of_locations.index(i) for i in start_and_homes]
+
+    for th in [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25]:
+        alan_wsy_idea = goodpoints(start_and_homes_idx, shortest_path_info, th)
+        alan_wsy_cycle = loc_to_go_with_indices(list_of_locations, alan_wsy_idea, starting_car_location, shortest_path_info)
+        alan_wsy_1, alan_wsy_2, alan_wsy_energy = dropoffLocToOutput(alan_wsy_cycle, shortest_path_info, list_of_homes, list_of_locations)
+        if alan_wsy_energy < minEnergy:
+            print("Threshold = ", th)
+            min_result_1, min_result_2, minEnergy = alan_wsy_1, alan_wsy_2, alan_wsy_energy
+
+    return [min_result_1, min_result_2]
+
+
     # print(minEnergy)
     # k_cluster_num_upper_bound = len(list_of_homes) // 20 + 1
     k_cluster_num_upper_bound = 2
