@@ -1,12 +1,16 @@
 from generateOutput import *
+from solver import *
 from simanneal import Annealer
 import random
+import numpy as np
 class DTHProblem(Annealer):
     """Test annealer with a travelling salesman problem."""
     def __init__(self, initialList, shortest_path_info, list_of_homes, list_of_locs):
+        print(initialList)
         self.shortest_path_info = shortest_path_info
-        self.list_of_homes = list(range(list_of_locs))
-        self.list_of_locs = list_of_locs
+        self.list_of_homes = list_of_homes
+        self.list_of_locs = list(range(len(list_of_locs))) #index
+        self.original_loc = list_of_locs #name
         super(DTHProblem, self).__init__(initialList)
     def move(self):
         initial_energy = self.energy()
@@ -16,42 +20,58 @@ class DTHProblem(Annealer):
         swap_weight = 1.0
         weights = []
         choices = []
-        not_included = [for i in list_of_locs if i not in self.state]
+        
+        not_included = []
+        for i in self.list_of_locs:
+            if i not in self.state:
+                not_included.append(i)
         if len(not_included) == 0:
             choices = [1,2]
             weights = [remove_weight, swap_weight]
-        else if len(self.state) == 0:
+        elif len(self.state) == 0:
             choices = [0]
             weights = [1.0]
         else:
-            if len(self.state) > 1:
+            if len(self.state) > 2:
                 choices = [0,1,2]
+                weights = [add_weight, remove_weight, swap_weight]
             else:
-                choices [0]
-        method = random.choice(choices, weights = weights)
+                choices = [0]
+                weights = [add_weight]
+        method = np.random.choice(choices)
         if method == 2:
+             g = 1+1
+#            a = random.randint(1, len(self.state) - 2)
+#            b = random.randint(1, len(self.state) - 2)
+#            self.state[a], self.state[b] = self.state[b], self.state[a]
+        elif method == 1:
             a = random.randint(1, len(self.state) - 2)
-            b = random.randint(1, len(self.state) - 2)
-            self.state[a], self.state[b] = self.state[b], self.state[a]
-        else if method == 1:
-            a = random.randint(1, len(self.state) - 2)
+            path_to_add = getShortestDistAndPath(self.shortest_path_info, self.state[a-1], self.state[a+1])[1]
+            path_to_add = path_to_add[1:-1]
             self.state.pop(a)
-        else if method == 0:
+            self.state[a:a] = path_to_add
+        else:
             a = random.choice(not_included)
-            b = random.randint(1, len(not_included) - 2)
-            self.state.insert(b, a)
+            b = random.randint(1, len(self.state) - 2)
+            path_before_a = getShortestDistAndPath(self.shortest_path_info, self.state[b-1], a)[1]
+            path_before_a = path_before_a[1:]
+            path_after_a = getShortestDistAndPath(self.shortest_path_info, a, self.state[b+1])[1]
+            added_path = path_before_a + path_after_a[1:-1]
+            self.state[b:b] = added_path
         return self.energy() - initial_energy
         
     def energy(self):
-        _, __, e = dropoffLocToOutput(self.state, self.shortest_path_info, self.list_of_homes, self.list_of_locs)
-        return e
+        _, __, ennn = dropoffLocToOutput(self.state, self.shortest_path_info, self.list_of_homes, self.original_loc)
+        return ennn
         
 def runAnneal(initialList, shortest_path_info, list_of_homes, list_of_locs):
-    problem = DTHProblem(initialList, shortest_path_info, list_of_homes, list_of_locs)
+    print("Start annealing")
+    tsp = DTHProblem(initialList, shortest_path_info, list_of_homes, list_of_locs)
     tsp.set_schedule(tsp.auto(minutes=0.2))
     tsp.copy_strategy = "slice"
     res, e = tsp.anneal()
-    return res, e
+    res1, res2, en = dropoffLocToOutput(res, shortest_path_info, list_of_homes, list_of_locs)
+    return res1, res2, en
 #def makeBetter(list_locs, list_homes, start_car_loc, shortest_path_info, cur_a, cur_b, cur_energy):
 #    # First check no-drive
 #    a, b, energy = dropAllAtSoda(list_locs, list_homes, start_car_loc, shortest_path_info)

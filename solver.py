@@ -13,6 +13,7 @@ from generateOutput import *
 import Google_OR # Source - Google optimization team https://developers.google.com/optimization/routing/vrp
 import input_validator
 import output_validator
+from additional_annealing import *
 """
 ======================================================================
   Complete the following function.
@@ -43,15 +44,15 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         A dictionary mapping drop-off location to a list of homes of TAs that got off at that particular location
         NOTE: both outputs should be in terms of indices not the names of the locations themselves
     """
-    if input_file == "/11_50.in":
-        print("HI 50 only once please")
-        return best_of_our_50_result
-    elif input_file == "/11_100.in":
-        print("HI 100 here only once")
-        return best_of_our_100_result
-    elif input_file == "/11_200.in":
-        print("HI 200... still once plz")
-        return best_of_our_200_result
+#    if input_file == "/11_50.in":
+#        print("HI 50 only once please")
+#        return best_of_our_50_result
+#    elif input_file == "/11_100.in":
+#        print("HI 100 here only once")
+#        return best_of_our_100_result
+#    elif input_file == "/11_200.in":
+#        print("HI 200... still once plz")
+#        return best_of_our_200_result
 
     G, message = adjacency_matrix_to_graph(adjacency_matrix)
 
@@ -120,31 +121,31 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         selectivity_lst = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
     else:
         selectivity_lst = [0.3, 0.6]
-    # 100
-#    if starting_car_location == 'Soda' and (list_of_homes[:12] == ['loc57', 'loc21', 'loc79', 'loc18', 'loc72', 'loc33', 'loc71', 'loc19', 'loc45', 'loc90', 'loc67', 'loc26']):
-#        print('HI our own 100')
-#        times = 500
-#        selectivity_lst = [0.1, 0.125, 0.15, 0.2, 0.3]
-    # 50
-    if list_of_locations == ['Soda', 'loc0', 'loc1', 'loc2', 'loc3', 'loc4', 'loc5', 'loc6', 'loc7', 'loc8', 'loc9', 'loc10', 'loc11',
-        'loc12', 'loc13', 'loc14', 'loc15', 'loc16', 'loc17', 'loc18', 'loc19', 'loc20', 'loc21', 'loc22', 'loc23',
-        'loc24', 'loc25', 'loc26', 'loc27', 'loc28', 'loc29', 'loc30', 'loc31', 'loc32', 'loc33', 'loc34', 'loc35',
-        'loc36', 'loc37', 'loc38', 'loc39', 'loc40', 'loc41', 'loc42', 'loc43', 'loc44', 'loc45', 'loc46', 'loc47', 'loc48']:
-        print("this 50 - directly returning")
-        car_route_50_idx = best_of_our_50
-        car_route_50 = [list_of_locations.index(loc) for loc in car_route_50_idx]
-        a, b, c = dropoffLocToOutput(car_route_50, shortest_path_info, list_of_homes, list_of_locations)
-        return [a, b]
-        times = 300
-        selectivity_lst = [0.3, 0.4, 0.5]
-    # 200
-    elif list_of_homes[:12] == ["loc45", "loc82", "loc90", "loc65", "loc151", "loc50", "loc83", "loc94", "loc34", "loc13", "loc74", "loc23"] and starting_car_location == 'Soda':
-        car_route_50_idx = best_of_our_200
-        car_route_50 = [list_of_locations.index(loc) for loc in car_route_50_idx]
-        a, b, c = dropoffLocToOutput(car_route_50, shortest_path_info, list_of_homes, list_of_locations)
-        return [a, b]
-#        times = 500
-#        selectivity_lst = [0.1, 0.2, 0.3, 0.4, 0.5]
+#    # 100
+##    if starting_car_location == 'Soda' and (list_of_homes[:12] == ['loc57', 'loc21', 'loc79', 'loc18', 'loc72', 'loc33', 'loc71', 'loc19', 'loc45', 'loc90', 'loc67', 'loc26']):
+##        print('HI our own 100')
+##        times = 500
+##        selectivity_lst = [0.1, 0.125, 0.15, 0.2, 0.3]
+#    # 50
+#    if list_of_locations == ['Soda', 'loc0', 'loc1', 'loc2', 'loc3', 'loc4', 'loc5', 'loc6', 'loc7', 'loc8', 'loc9', 'loc10', 'loc11',
+#        'loc12', 'loc13', 'loc14', 'loc15', 'loc16', 'loc17', 'loc18', 'loc19', 'loc20', 'loc21', 'loc22', 'loc23',
+#        'loc24', 'loc25', 'loc26', 'loc27', 'loc28', 'loc29', 'loc30', 'loc31', 'loc32', 'loc33', 'loc34', 'loc35',
+#        'loc36', 'loc37', 'loc38', 'loc39', 'loc40', 'loc41', 'loc42', 'loc43', 'loc44', 'loc45', 'loc46', 'loc47', 'loc48']:
+#        print("this 50 - directly returning")
+#        car_route_50_idx = best_of_our_50
+#        car_route_50 = [list_of_locations.index(loc) for loc in car_route_50_idx]
+#        a, b, c = dropoffLocToOutput(car_route_50, shortest_path_info, list_of_homes, list_of_locations)
+#        return [a, b]
+#        times = 300
+#        selectivity_lst = [0.3, 0.4, 0.5]
+#    # 200
+#    elif list_of_homes[:12] == ["loc45", "loc82", "loc90", "loc65", "loc151", "loc50", "loc83", "loc94", "loc34", "loc13", "loc74", "loc23"] and starting_car_location == 'Soda':
+#        car_route_50_idx = best_of_our_200
+#        car_route_50 = [list_of_locations.index(loc) for loc in car_route_50_idx]
+#        a, b, c = dropoffLocToOutput(car_route_50, shortest_path_info, list_of_homes, list_of_locations)
+#        return [a, b]
+##        times = 500
+##        selectivity_lst = [0.1, 0.2, 0.3, 0.4, 0.5]
     
     for selectivity in selectivity_lst:
         flag = 0
@@ -208,7 +209,17 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         if out_counter > 3:
             break
 
+    if len(min_result_1) == 1:
+        return [min_result_1, min_result_2]
+    else:
+        anneal_result1, anneal_result2, anneal_e = runAnneal(min_result_1, shortest_path_info, list_of_homes, list_of_locations)
+        if anneal_e < minEnergy:
+            min_result_1 = anneal_result1
+            min_result_2 = anneal_result2
+            minEnergy = anneal_e
+            print("Annealing worked!")
     return [min_result_1, min_result_2]
+
 
 
 
