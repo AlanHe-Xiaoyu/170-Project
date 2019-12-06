@@ -68,7 +68,7 @@ class DTHProblem(Annealer):
 def runAnneal(initialList, shortest_path_info, list_of_homes, list_of_locs):
     print("Start annealing")
     tsp = DTHProblem(initialList, shortest_path_info, list_of_homes, list_of_locs)
-    tsp.set_schedule(tsp.auto(minutes=0.02))
+    tsp.set_schedule(tsp.auto(minutes=0.002))
     tsp.copy_strategy = "slice"
     res, e = tsp.anneal()
     res1, res2, en = dropoffLocToOutput(res, shortest_path_info, list_of_homes, list_of_locs)
