@@ -83,7 +83,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             print("Threshold = ", th)
             min_result_1, min_result_2, minEnergy = alan_wsy_1, alan_wsy_2, alan_wsy_energy
 
-    return [min_result_1, min_result_2]
+    # return [min_result_1, min_result_2]
 
 
     # print(minEnergy)
