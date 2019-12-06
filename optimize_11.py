@@ -42,6 +42,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             a, b, energy = dropoffLocToOutput(subset_cycle, shortest_path_info, list_of_homes, list_of_locations)
             if energy < min_energy:
                 flag = False
+                print("Energy = ", energy)
                 print([a, b])
                 min_a, min_b, min_energy = a, b, energy
         
