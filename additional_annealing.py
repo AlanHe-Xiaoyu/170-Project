@@ -45,18 +45,25 @@ class DTHProblem(Annealer):
 #            b = random.randint(1, len(self.state) - 2)
 #            self.state[a], self.state[b] = self.state[b], self.state[a]
         elif method == 1:
-            a = random.randint(1, len(self.state) - 2)
+            if len(self.state) <= 2:
+                a = 1
+            else:
+                a = random.randint(1, len(self.state) - 1)
             # print(self.state)
-            path_to_add = getShortestDistAndPath(self.shortest_path_info, self.state[a-1], self.state[a+1])[1]
+            path_to_add = getShortestDistAndPath(self.shortest_path_info, self.state[a-1], self.state[a])[1]
             path_to_add = path_to_add[1:-1]
             self.state.pop(a)
             self.state[a:a] = path_to_add
         else:
             a = random.choice(not_included)
-            b = random.randint(1, len(self.state) - 2)
+            if len(self.state) <= 2:
+                b = 1
+            else:
+                # print(len(self.state))
+                b = random.randint(1, len(self.state) - 1)
             path_before_a = getShortestDistAndPath(self.shortest_path_info, self.state[b-1], a)[1]
             path_before_a = path_before_a[1:]
-            path_after_a = getShortestDistAndPath(self.shortest_path_info, a, self.state[b+1])[1]
+            path_after_a = getShortestDistAndPath(self.shortest_path_info, a, self.state[b])[1]
             added_path = path_before_a + path_after_a[1:-1]
             self.state[b:b] = added_path
         return self.energy() - initial_energy
