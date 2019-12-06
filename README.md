@@ -19,7 +19,7 @@ CS 170 Fall 2019 Project
 
 
 
-Rest are for our own purposes
+## Rest are for our own purposes
 
 11_50 : 10.219
 11_100 : 52.718
