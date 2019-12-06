@@ -24,7 +24,8 @@ from additional_annealing import *
 # # 279128.667
 best_50_route = ["Soda", "loc48", "loc35", "loc43", "loc38", "loc6", "loc39", "loc37", "loc15", "loc37", "loc39", "loc16", "loc38", "loc43", "Soda"]
 best_of_our_50_result = [[0, 44, 36, 44, 39, 7, 40, 38, 16, 42, 23, 3, 39, 44, 0], {3: [3], 39: [26, 2], 40: [21, 4, 17, 32], 7: [5, 47, 9, 12, 46, 20, 30, 11, 10, 6, 43], 16: [15, 16], 44: [18, 13], 36: [31, 49], 23: [23]}]
-
+best_50_route = ["Soda", "loc43", "loc38", "loc26", "loc5", "loc11", "loc1", "loc2", "loc22", "loc41", "loc22", "loc2", "loc38", "loc43", "loc35", "loc48", "Soda"]
+best_of_our_50_result = [[0, 44, 39, 27, 6, 12, 2, 3, 23, 42, 23, 3, 39, 44, 36, 49, 0], {3: [3], 2: [26, 2], 12: [21, 5, 4, 32, 12, 20, 30, 11, 10, 43], 27: [47, 9, 17, 46], 42: [15, 16], 44: [18, 13], 36: [31], 23: [23], 49: [49], 6: [6]}]
 # # 9900188.0.
 best_100_route = ["Soda", "loc3", "loc63", "loc86", "loc96", "loc53", "loc29", "loc95", "loc29", "loc53", "loc96", "loc86", "loc63", "loc64", "loc8", "loc31", "loc41", "loc31", "loc8", "loc64", "Soda"]
 best_of_our_100_result = [[0, 80, 79, 60, 76, 84, 85, 40, 39, 89, 44, 6, 42, 98, 21, 50, 52, 69, 18, 7, 22, 43, 26, 67, 90, 45, 32, 48, 97, 36, 66, 45, 20, 73, 49, 81, 45, 93, 45, 19, 71, 33, 50, 35, 0, 74, 56, 34, 5, 16, 94, 47, 78, 4, 87, 57, 64, 83, 91, 68, 38, 41, 31, 8, 17, 8, 64, 65, 72, 46, 3, 63, 30, 23, 61, 12, 92, 53, 55, 13, 28, 95, 29, 53, 96, 86, 10, 63, 51, 9, 54, 51, 2, 24, 11, 14, 77, 27, 59, 37, 70, 75, 82, 88, 82, 15, 58, 62, 80, 25, 0], {57: [57], 21: [21], 79: [79], 18: [18], 72: [72], 33: [33], 71: [71], 19: [19], 45: [45], 90: [90], 67: [67], 26: [26], 43: [43], 49: [49], 73: [73], 20: [20], 32: [32], 48: [48], 81: [81], 93: [93], 66: [66], 36: [36], 97: [97], 17: [17], 8: [8], 83: [83], 31: [31], 91: [91], 41: [41], 68: [68], 38: [38], 40: [40], 44: [44], 39: [39], 89: [89], 30: [30], 23: [23], 61: [61], 12: [12], 92: [92], 53: [53], 96: [96, 99], 86: [86], 10: [10], 55: [55], 29: [29], 13: [13], 28: [28], 95: [95]}]
@@ -70,7 +71,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         best_200_route_idx = [list_of_locations.index(i) for i in best_200_route]
         min_result_1, min_result_2, minEnergy = dropoffLocToOutput(best_200_route_idx, shortest_path_info, list_of_homes, list_of_locations)
 
-
+    # print(minEnergy)
     # k_cluster_num_upper_bound = len(list_of_homes) // 20 + 1
     k_cluster_num_upper_bound = 2
 
@@ -86,7 +87,8 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     car_cycle = [list_of_locations.index(starting_car_location)]
     simple_result_1, simple_result_2, simple_energy = dropoffLocToOutput(car_cycle, shortest_path_info, list_of_homes, list_of_locations)
     # print('Baseline 1 done')
-    min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
+    if simple_energy < minEnergy:
+        min_result_1, min_result_2, minEnergy = simple_result_1, simple_result_2, simple_energy
     
      # return [min_result_1, min_result_2]
 
@@ -167,6 +169,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         wsy_1, wsy_2, wsy_energy = dropoffLocToOutput(wsy_cycle, shortest_path_info, list_of_homes, list_of_locations)
         if wsy_energy < minEnergy:
             print("WSY SUCCESS")
+            print("WST energy = ", wsy_energy, minEnergy)
             min_result_1, min_result_2, minEnergy = wsy_1, wsy_2, wsy_energy
 
 

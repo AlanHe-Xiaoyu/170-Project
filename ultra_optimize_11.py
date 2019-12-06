@@ -22,7 +22,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
 
     min_a, min_b, min_energy = None, None, float('inf')
-    all_ns = list(range(len(list_of_locations)))
+    all_ns = list(range(2, len(list_of_locations) - 2))
     
     pick_front = True
     while len(all_ns) > 0:
@@ -36,12 +36,18 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         print()
         print(n)
         print()
+        counter = 0
         for subset_homes in list(itertools.combinations(list_of_locations, n)):
             subset_cycle = loc_to_go_TSP(list_of_locations, subset_homes, starting_car_location, shortest_path_info)
             a, b, energy = dropoffLocToOutput(subset_cycle, shortest_path_info, list_of_homes, list_of_locations)
             if energy < min_energy:
                 print([a, b])
+                print("Energy = ", energy)
                 min_a, min_b, min_energy = a, b, energy
+            counter += 1
+            if counter == 200:
+                counter = 0
+                print("here")
 
     return [min_a, min_b]
 
