@@ -20,7 +20,8 @@ import output_validator
 """
 # 279149.3333333334
 # best_of_our_50_result = [[0, 44, 39, 7, 11, 9, 5, 12, 3, 23, 42, 16, 38, 40, 17, 39, 44, 36, 49, 0], {3: [3], 12: [26, 2, 32, 12, 30, 6, 43], 40: [21, 4], 5: [5, 20, 10], 7: [47, 46], 9: [9], 42: [15], 44: [18, 13], 36: [31], 23: [23], 17: [17], 49: [49], 16: [16], 11: [11]}]
-best_of_our_50_result = [[0, 49, 36, 44, 39, 7, 40, 38, 16, 38, 40, 17, 39, 44, 0], {7: [3, 5, 47, 9, 12, 46, 20, 30, 11, 10, 6, 43], 39: [26, 2], 40: [21, 4], 16: [15, 23, 16], 44: [18, 13], 36: [31], 17: [17, 32], 49: [49]}]
+# best_of_our_50_result = [[0, 49, 36, 44, 39, 7, 40, 38, 16, 38, 40, 17, 39, 44, 0], {7: [3, 5, 47, 9, 12, 46, 20, 30, 11, 10, 6, 43], 39: [26, 2], 40: [21, 4], 16: [15, 23, 16], 44: [18, 13], 36: [31], 17: [17, 32], 49: [49]}]
+best_of_our_50_result = [[0, 44, 36, 44, 39, 7, 40, 38, 16, 42, 23, 3, 39, 44, 0], {3: [3], 39: [26, 2], 40: [21, 4, 17, 32], 7: [5, 47, 9, 12, 46, 20, 30, 11, 10, 6, 43], 16: [15, 16], 44: [18, 13], 36: [31, 49], 23: [23]}]
 best_of_our_100_result = [[0, 80, 79, 60, 76, 84, 85, 40, 39, 89, 44, 6, 42, 98, 21, 50, 52, 69, 18, 7, 22, 43, 26, 67, 90, 45, 32, 48, 97, 36, 66, 45, 20, 73, 49, 81, 45, 93, 45, 19, 71, 33, 50, 35, 0, 74, 56, 34, 5, 16, 94, 47, 78, 4, 87, 57, 64, 83, 91, 68, 38, 41, 31, 8, 17, 8, 64, 65, 72, 46, 3, 63, 30, 23, 61, 12, 92, 53, 55, 13, 28, 95, 29, 53, 96, 86, 10, 63, 51, 9, 54, 51, 2, 24, 11, 14, 77, 27, 59, 37, 70, 75, 82, 88, 82, 15, 58, 62, 80, 25, 0], {57: [57], 21: [21], 79: [79], 18: [18], 72: [72], 33: [33], 71: [71], 19: [19], 45: [45], 90: [90], 67: [67], 26: [26], 43: [43], 49: [49], 73: [73], 20: [20], 32: [32], 48: [48], 81: [81], 93: [93], 66: [66], 36: [36], 97: [97], 17: [17], 8: [8], 83: [83], 31: [31], 91: [91], 41: [41], 68: [68], 38: [38], 40: [40], 44: [44], 39: [39], 89: [89], 30: [30], 23: [23], 61: [61], 12: [12], 92: [92], 53: [53], 96: [96, 99], 86: [86], 10: [10], 55: [55], 29: [29], 13: [13], 28: [28], 95: [95]}]
 # best_of_our_100_result = [[0, 80, 79, 60, 76, 84, 85, 54, 9, 51, 2, 24, 11, 14, 6, 44, 89, 39, 40, 44, 6, 56, 34, 74, 1, 35, 78, 47, 94, 16, 5, 77, 27, 59, 60, 87, 57, 87, 4, 63, 10, 86, 99, 96, 53, 55, 13, 28, 95, 29, 53, 92, 12, 61, 23, 30, 63, 3, 65, 64, 8, 17, 8, 31, 41, 38, 68, 91, 83, 64, 65, 42, 98, 21, 50, 52, 69, 18, 7, 22, 43, 26, 67, 90, 45, 93, 45, 81, 49, 73, 20, 45, 66, 36, 97, 48, 32, 45, 19, 71, 33, 50, 62, 58, 15, 82, 88, 46, 72, 25, 37, 70, 75, 0], {57: [57], 21: [21], 79: [79], 18: [18], 72: [72], 33: [33], 71: [71], 19: [19], 45: [45], 90: [90], 67: [67], 26: [26], 43: [43], 49: [49], 73: [73], 20: [20], 32: [32], 48: [48], 81: [81], 93: [93], 66: [66], 36: [36], 97: [97], 17: [17], 8: [8], 83: [83], 31: [31], 91: [91], 41: [41], 68: [68], 38: [38], 40: [40], 44: [44], 39: [39], 89: [89], 30: [30], 23: [23], 61: [61], 12: [12], 92: [92], 53: [53], 96: [96], 86: [86], 10: [10], 99: [99], 55: [55], 29: [29], 13: [13], 28: [28], 95: [95]}]
 # best_of_our_100_result = [[0, 3, 63, 12, 92, 53, 29, 95, 29, 53, 96, 86, 63, 22, 43, 26, 67, 90, 45, 66, 45, 90, 67, 26, 43, 22, 64, 8, 31, 41, 31, 8, 64, 0], {63: [57, 30, 23, 61], 22: [21], 0: [79, 18], 3: [72, 40, 44, 39, 89], 67: [33, 71, 67], 43: [19, 43], 45: [45, 49, 73, 20, 32, 48, 81, 93], 90: [90], 26: [26], 66: [66, 36, 97], 8: [17, 8, 83, 91, 68], 31: [31], 41: [41, 38], 12: [12], 92: [92], 53: [53, 55, 13], 96: [96, 99], 86: [86, 10], 29: [29], 95: [28, 95]}]
@@ -61,7 +62,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     shortest_path_info = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
     int_adj_matrix = adj_matrix_to_int(adjacency_matrix)
-
+    # print(shortest_path_info)
     min_result_1, min_result_2, minEnergy = None, None, float('inf')
 
     """ Own inputs """
@@ -261,7 +262,10 @@ def loc_to_go_with_indices(list_of_locations, indices_to_TSP, starting_car_locat
         home = homes_indices[i]
         homes_int_adj_matrix[i][i] = 0
         for j in range(i + 1, num_homes):
-            dist_ij, _ = getShortestDistAndPath(shortest_path_info, i, j)
+            # print(num_homes)
+            next_home = homes_indices[j]
+            # print(next_home)
+            dist_ij, _ = getShortestDistAndPath(shortest_path_info, home, next_home)
             homes_int_adj_matrix[i][j] = homes_int_adj_matrix[j][i] = dist_ij
     raw_TSP_cycle = Google_OR.main_func(homes_int_adj_matrix, 1)
     start_in_TSP_idx = raw_TSP_cycle.index(0) # corresponds to starting_idx in homes_indices
@@ -279,12 +283,20 @@ def loc_to_go_with_indices(list_of_locations, indices_to_TSP, starting_car_locat
     
 def loc_to_go_TSP(list_of_locations, places_to_TSP, starting_car_location, shortest_path_info):
     homes_indices = [list_of_locations.index(i) for i in places_to_TSP]
+    print(homes_indices)
     return loc_to_go_with_indices(list_of_locations, homes_indices, starting_car_location, shortest_path_info)
 
 
 def getShortestDistAndPath(dijkstra_info, i, j):
     pair_info = dijkstra_info[i][1]
-    dist, path = pair_info[0][j], pair_info[1][j]
+    if i == j:
+        print("ERROR shouldnt be here")
+        return [0, [i]]
+    # print(i, j)
+    # print(dijkstra_info)
+    # print(j)
+    dist = pair_info[0][j]
+    path = pair_info[1][j]
     return [dist, path[:]]
 
 def adj_matrix_to_int(adj_matrix):
