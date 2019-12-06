@@ -8,7 +8,12 @@ Sources:
 
 How to run?
 1. python3 solver.py --all inputs final_outputs
-- if anything fails, drag it out, and rerun individually at the very end
+- If anything fails, drag it out, and rerun individually at the very end
+- On GCP, we used tmux to separate into 4 processes, each of which runs:
+python3 solver.py --all inputs1_92 final_outputs
+python3 solver.py --all inputs93_185 final_outputs
+python3 solver.py --all inputs186_278 final_outputs 
+python3 solver.py --all inputs279_366 final_outputs
 2. python3 compress_output.py final_outputs/
 
 
