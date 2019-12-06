@@ -96,10 +96,11 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     """
     times = 150
     selectivity_lst = []
-    if len(list_of_homes) <= 50:
+    if len(list_of_homes) <= 25:
         selectivity_lst = [0.3]
-    elif len(list_of_homes) <= 100:
-        selectivity_lst = [0.3, 0.5, 0.7]
+    elif len(list_of_homes) <= 50:
+        print("100 here")
+        selectivity_lst = [0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
     else:
         selectivity_lst = [0.3, 0.6]
     # 100
@@ -135,6 +136,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
             random_homes_only_car_cycle = randomSendHome(list_of_locations, list_of_homes, starting_car_location, shortest_path_info, selectivity)
             random_send_home_result_1, random_send_home_result_2, random_send_home_energy = dropoffLocToOutput(random_homes_only_car_cycle, shortest_path_info, list_of_homes, list_of_locations)
             if random_send_home_energy < minEnergy:
+                # print(random_send_home_result_1)
                 print(selectivity, "Success")
                 min_result_1, min_result_2, minEnergy = random_send_home_result_1, random_send_home_result_2, random_send_home_energy
             else:
@@ -164,7 +166,7 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         d_result = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
         cluster, center = kcluster(d_result, num_of_homes, home_list, k)
 
-        all_k_sel = [0, 0.1]
+        all_k_sel = [0, 0.1, 0.2, 0.9]
         k_times = 100
         counter = 0
         for k_cluster_sel in all_k_sel:
@@ -189,53 +191,6 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         if out_counter > 3:
             break
 
-
-    # return [min_result_1, min_result_2]
-
-    # """
-    # K-Cluster as dropoff
-    # """
-    # K_list = [i for i in range(2, len(list_of_homes), 1)]
-    # counter = 0
-    # for k in K_list:
-    #     print("k=", k)
-    #     name_index_map = {}
-    #     num_of_homes = len(list_of_homes)
-    #     home_list = []
-    #     for i in range(len(list_of_locations)):
-    #         name_index_map[list_of_locations[i]] = i;
-    #     for x in list_of_homes:
-    #         home_list += [name_index_map[x]]
-    #     d_result = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
-    #     cluster, center = kcluster(d_result, num_of_homes, home_list, k)
-    #     # print(kcluster(d_result, num_of_homes, home_list, k))
-
-    #     k_cluster_sel = 0.25
-    #     random_indices = get_random_indices_k_cluster(cluster, k_cluster_sel)
-    #     random_indices.extend(center)
-    #     random_indices = list(set(random_indices))
-    #     print(random_indices)
-    #     random_k_cluster_cycle = loc_to_go_with_indices(list_of_locations, random_indices, starting_car_location, shortest_path_info)
-    #     k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy = dropoffLocToOutput(random_k_cluster_cycle, shortest_path_info, list_of_homes, list_of_locations)
-    #     # print(k, k_cluster_result_energy)
-    #     if k_cluster_result_energy < minEnergy:
-    #         print("k_cluster", k, sel, "Success")
-    #         min_result_1, min_result_2, minEnergy = k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy
-    #     elif counter > 5:
-    #         break
-    #     else:
-    #         counter += 1
-
-        # k_cluster_cycle = loc_to_go_with_indices(list_of_locations, center, starting_car_location, shortest_path_info)
-        # k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy = dropoffLocToOutput(k_cluster_cycle, shortest_path_info, list_of_homes, list_of_locations)
-        # # print(k, k_cluster_result_energy)
-        # if k_cluster_result_energy < minEnergy:
-        #     print("k_cluster", k, "Success")
-        #     min_result_1, min_result_2, minEnergy = k_cluster_result_1, k_cluster_result_2, k_cluster_result_energy
-        # elif counter > 5:
-        #     break
-        # else:
-        #     counter += 1
     return [min_result_1, min_result_2]
 
 
@@ -279,9 +234,10 @@ def randomSendHome(list_of_locations, list_of_homes, starting_car_location, shor
 """
 Helpers
 """
+# Better alg now!!!
 def loc_to_go_with_indices(list_of_locations, indices_to_TSP, starting_car_location, shortest_path_info):
     starting_idx = list_of_locations.index(starting_car_location)
-    homes_indices = indices_to_TSP
+    homes_indices = [starting_idx] + indices_to_TSP
     num_homes = len(homes_indices)
     homes_int_adj_matrix = []
     for _ in range(num_homes):
@@ -292,41 +248,24 @@ def loc_to_go_with_indices(list_of_locations, indices_to_TSP, starting_car_locat
         for j in range(i + 1, num_homes):
             dist_ij, _ = getShortestDistAndPath(shortest_path_info, i, j)
             homes_int_adj_matrix[i][j] = homes_int_adj_matrix[j][i] = dist_ij
-    homes_only_TSP_car_cycle = Google_OR.main_func(homes_int_adj_matrix, 1)
-    _, final_homes_only_car_cycle = getShortestDistAndPath(shortest_path_info, starting_idx, homes_indices[homes_only_TSP_car_cycle[0]])
-    for i in range(1, len(homes_only_TSP_car_cycle) - 1):
-        prev_car_idx, cur_car_idx = homes_only_TSP_car_cycle[i - 1], homes_only_TSP_car_cycle[i]
-        actual_prev_car, actual_cur_car = homes_indices[prev_car_idx], homes_indices[cur_car_idx]
-        _, sp_between = getShortestDistAndPath(shortest_path_info, actual_prev_car, actual_cur_car)
-        final_homes_only_car_cycle.extend(sp_between[1:])
-    _, ending_path = getShortestDistAndPath(shortest_path_info, homes_indices[homes_only_TSP_car_cycle[-2]], starting_idx)
-    final_homes_only_car_cycle.extend(ending_path[1:])
+    raw_TSP_cycle = Google_OR.main_func(homes_int_adj_matrix, 1)
+    start_in_TSP_idx = raw_TSP_cycle.index(0) # corresponds to starting_idx in homes_indices
+    actual_TSP_cycle = raw_TSP_cycle[start_in_TSP_idx :] + raw_TSP_cycle[1 : start_in_TSP_idx]
+    # actual_TSP_cycle should be a cycle start/end in 0, in homes_indices
+    translate_to_loc_idx = [homes_indices[i] for i in actual_TSP_cycle] # in list_of_locations, start/end in starting_idx
+
+    first, second = translate_to_loc_idx[0], translate_to_loc_idx[1]
+    _, final_homes_only_car_cycle = getShortestDistAndPath(shortest_path_info, first, second)
+    for i in range(2, len(translate_to_loc_idx)):
+        prev_loc_idx, cur_loc_idx = translate_to_loc_idx[i-1], translate_to_loc_idx[i]
+        _, sp_between = getShortestDistAndPath(shortest_path_info, prev_loc_idx, cur_loc_idx)
+        final_homes_only_car_cycle.extend(sp_between[1 :])
     return final_homes_only_car_cycle
     
-
 def loc_to_go_TSP(list_of_locations, places_to_TSP, starting_car_location, shortest_path_info):
-    starting_idx = list_of_locations.index(starting_car_location)
     homes_indices = [list_of_locations.index(i) for i in places_to_TSP]
-    num_homes = len(homes_indices)
-    homes_int_adj_matrix = []
-    for _ in range(num_homes):
-        homes_int_adj_matrix.append([None] * num_homes)
-    for i in range(num_homes):
-        home = homes_indices[i]
-        homes_int_adj_matrix[i][i] = 0
-        for j in range(i + 1, num_homes):
-            dist_ij, _ = getShortestDistAndPath(shortest_path_info, i, j)
-            homes_int_adj_matrix[i][j] = homes_int_adj_matrix[j][i] = dist_ij
-    homes_only_TSP_car_cycle = Google_OR.main_func(homes_int_adj_matrix, 1)
-    _, final_homes_only_car_cycle = getShortestDistAndPath(shortest_path_info, starting_idx, homes_indices[homes_only_TSP_car_cycle[0]])
-    for i in range(1, len(homes_only_TSP_car_cycle) - 1):
-        prev_car_idx, cur_car_idx = homes_only_TSP_car_cycle[i - 1], homes_only_TSP_car_cycle[i]
-        actual_prev_car, actual_cur_car = homes_indices[prev_car_idx], homes_indices[cur_car_idx]
-        _, sp_between = getShortestDistAndPath(shortest_path_info, actual_prev_car, actual_cur_car)
-        final_homes_only_car_cycle.extend(sp_between[1:])
-    _, ending_path = getShortestDistAndPath(shortest_path_info, homes_indices[homes_only_TSP_car_cycle[-2]], starting_idx)
-    final_homes_only_car_cycle.extend(ending_path[1:])
-    return final_homes_only_car_cycle
+    return loc_to_go_with_indices(list_of_locations, homes_indices, starting_car_location, shortest_path_info)
+
 
 def getShortestDistAndPath(dijkstra_info, i, j):
     pair_info = dijkstra_info[i][1]
