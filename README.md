@@ -5,15 +5,11 @@ CS 170 Fall 2019 Project
 ## Sources:
 1. TSP solver : Google optimization team https://developers.google.com/optimization/routing/vrp
 2. Simulated annealing : https://github.com/perrygeo/simanneal
+3. We implemented K-clustering following from the pseudocode on the textbook
 
 ## How to run?
 1. python3 solver.py --all inputs final_outputs
 - If anything fails, drag it out, and rerun individually at the very end
-- On GCP, we used tmux to separate into 4 processes, each of which runs:
-  - python3 solver.py --all inputs1_92 final_outputs
-  - python3 solver.py --all inputs93_185 final_outputs
-  - python3 solver.py --all inputs186_278 final_outputs 
-  - python3 solver.py --all inputs279_366 final_outputs
 2. python3 compress_output.py final_outputs/
 
 
