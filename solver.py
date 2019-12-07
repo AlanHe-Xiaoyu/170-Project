@@ -74,8 +74,8 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
     # TODO: run alan+wsy idea (below)
     start_and_homes = [starting_car_location] + list_of_homes
     start_and_homes_idx = [list_of_locations.index(i) for i in start_and_homes]
-
-    for th in [2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25]:
+    num_of_homes = len(list_of_homes)
+    for th in range(num_of_homes+1):
         alan_wsy_idea = goodpoints(start_and_homes_idx, shortest_path_info, th)
         alan_wsy_cycle = loc_to_go_with_indices(list_of_locations, alan_wsy_idea, starting_car_location, shortest_path_info)
         alan_wsy_1, alan_wsy_2, alan_wsy_energy = dropoffLocToOutput(alan_wsy_cycle, shortest_path_info, list_of_homes, list_of_locations)
@@ -179,13 +179,21 @@ def solve(list_of_locations, list_of_homes, starting_car_location, adjacency_mat
         d_result = list(shortest_paths_and_lengths(list_of_locations, adjacency_matrix))
         cluster, center = kcluster(d_result, num_of_homes, home_list, k)
 
-        wsy_idea = goodpoints(home_list, shortest_path_info)
-        wsy_cycle = loc_to_go_with_indices(list_of_locations, wsy_idea, starting_car_location, shortest_path_info)
-        wsy_1, wsy_2, wsy_energy = dropoffLocToOutput(wsy_cycle, shortest_path_info, list_of_homes, list_of_locations)
-        if wsy_energy < minEnergy:
+        min_wsy_energy = float("inf")
+        min_1 = float("inf")
+        min_2 = float("inf")
+        for i in range(num_of_homes + 1):
+            wsy_idea = goodpoints(home_list, shortest_path_info, i)
+            wsy_cycle = loc_to_go_with_indices(list_of_locations, wsy_idea, starting_car_location, shortest_path_info)
+            wsy_1, wsy_2, wsy_energy = dropoffLocToOutput(wsy_cycle, shortest_path_info, list_of_homes, list_of_locations)
+            if wsy_energy < min_wsy_energy:
+                min_wsy_energy = wsy_energy
+                min_1 = wsy_1
+                min_2 = wsy_2
+        if min_wsy_energy < minEnergy:
             print("WSY SUCCESS")
             # print("WST energy = ", wsy_energy, minEnergy)
-            min_result_1, min_result_2, minEnergy = wsy_1, wsy_2, wsy_energy
+            min_result_1, min_result_2, minEnergy = min_1, min_2, min_wsy_energy
 
 
         all_k_sel = [0, 0.1, 0.2, 0.9]
